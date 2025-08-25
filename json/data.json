@@ -1,0 +1,29 @@
+{
+  "books": [
+    {
+      "id": 1,
+      "title": "Petualangan Luma dan Tikus",
+      "story": [
+        "Di sebuah desa kecil yang damai, hiduplah seorang kelinci bernama Luma yang suka memasak.",
+        "Setiap pagi, Luma membuka toko kue miliknya, membuat roti dan kue lezat untuk seluruh warga desa.",
+        "Namun, belakangan ini, ada masalah besar: tikus-tikus nakal selalu mencuri bahan makanan Luma!",
+        "Mereka lincah dan muncul dari lubang-lubang tersembunyi di lantai toko. Luma pun frustrasi, karena kue-kue favoritnya tidak pernah sampai ke pelanggan.",
+        "Luma pun berpikir: 'Aku harus berhenti mereka sebelum semuanya habis!'",
+        "Di saat itu, Luma menemukan palu kayu kecil di rak dapur. Ia pun memutuskan untuk menghadapi tikus-tikus itu dengan caranya sendiri.",
+        "Inilah waktunya... pemain!",
+        "Pemain membantu Luma menangkap tikus-tikus yang muncul dari berbagai lubang. Semakin banyak tikus yang tertangkap, semakin sedikit bahan makanan yang hilang."
+      ],
+      "game": "hit-the-mole",
+      "ending": {
+        "perfect": "Luma tersenyum lebar, dapurnya bersih dari gangguan tikus. Semua bahan makanan selamat, dan kue-kue yang dibuatnya menjadi terkenal di seluruh desa. Luma pun membuka 'Festival Kue' setiap akhir minggu untuk merayakan kemenangan!",
+        "medium": "Beberapa tikus masih berhasil mencuri beberapa bahan. Luma harus bekerja keras lagi, tapi ia belajar trik baru untuk menjaga dapurnya. Ia tetap bisa membuat kue lezat, meski harus sedikit berhati-hati.",
+        "bad": "Tikus-tikus nakal berhasil mengacak-acak dapur Luma. Banyak kue yang hilang dan bahan makanan rusak. Luma sedih, tapi ia berjanji akan melatih diri lebih keras untuk menghadapi tikus-tikus itu lain kali."
+      },
+      "gameConfig": {
+        "timeLimit": 35,
+        "targetScore": 15,
+        "moleInterval": 2000
+      }
+    }
+  ]
+}

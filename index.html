@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hit the Mole</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <!-- Story Container -->
+    <div id="storyContainer">
+        <h2 id="storyTitle"></h2>
+        <div id="storyText"></div>
+        <div id="storyAction">
+            <button id="startStoryBtn">Mulai Game</button>
+        </div>
+    </div>
+
+    <!-- Modal Start -->
+    <div id="modal" style="display:none;">
+        <div id="modal-content">
+            <h2>Wortel Dalam Bahaya!</h2>
+            <p>Cepat tangkap 15 tikus yang muncul sebelum mereka mencuri hasil panenmu!</p>
+            <button id="start-btn">Mulai</button>
+        </div>
+    </div>
+
+    <!-- Status -->
+    <div class="status-container">
+        <div class="status-box">Waktu: <span id="timer">35</span></div>
+        <div class="status-box">Skor: <span id="score">0</span></div>
+    </div>
+
+    <!-- Game Area -->
+    <div id="game" style="display:none;">
+        <div class="hole"><div class="mole"><img src="img/8.png"></div></div>
+        <div class="hole"><div class="mole"><img src="img/8.png"></div></div>
+        <div class="hole"><div class="mole"><img src="img/8.png"></div></div>
+        <div class="hole"><div class="mole"><img src="img/8.png"></div></div>
+        <div class="hole"><div class="mole"><img src="img/8.png"></div></div>
+        <div class="hole"><div class="mole"><img src="img/8.png"></div></div>
+        <div class="hole"><div class="mole"><img src="img/8.png"></div></div>
+        <div class="hole"><div class="mole"><img src="img/8.png"></div></div>
+        <div class="hole"><div class="mole"><img src="img/8.png"></div></div>
+    </div>
+
+    <!-- End Modal -->
+    <div id="endModal" style="display:none;">
+        <div class="modal-content">
+            <h2></h2>
+            <p><span id="finalScore"></span></p>
+            <button id="restart-btn">OK</button>
+        </div>
+    </div>
+
+    <!-- JS -->
+    <script src="js/script.js"></script>
+</body>
+</html>

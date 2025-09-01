@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bubble Background</title>
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #f9ee85, #ce7af2, #6941f8); /* gradasi dasar */
+        overflow: hidden;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    /* Bubble lingkaran */
+    .bubble {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(80px);
+        opacity: 0.7;
+        z-index: -1;
+    }
+
+    .bubble1 {
+        width: 500px;
+        height: 500px;
+        background: #d172fa; /* peach lembut */
+        top: -130px;
+        left: -150px;
+    }
+
+    .bubble2 {
+        width: 500px;
+        height: 500px;
+        background: #f8deb6; /* ungu lembut */
+        bottom: -150px;
+        right: -150px;
+    }
+
+    .container {
+        width: 100%;
+        max-width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.10);
+        display: flex;
+        overflow: hidden;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        z-index: 1;
+    }
+    .container1 {
+        width: 90%;
+        height: 40%;
+        margin: auto;
+        margin-bottom: 1px;
+        border-radius: 40px 40px 0 0;
+        background-color: aliceblue;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.3);
+        box-shadow: 0 8px 30px rgba(189, 102, 247, 0.9);
+    }
+
+    .wrapper {
+        display: flex;
+        justify-content: center;
+        gap: 200px;
+        flex-wrap: wrap;
+    }
+
+    .box {
+        height: 270px;
+        width: 200px;
+        margin-top: 15px;
+        background: rgba(255, 255, 255, 0.4);
+        border-radius: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        transition: transform 0.45s cubic-bezier(0.25, 0.8, 0.25, 1),
+                    box-shadow 0.45s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .box:hover {
+        transform: translateY(-12px) scale(1.06); /* naik + sedikit membesar */
+        box-shadow: 0 12px 30px rgba(0,0,0,0.4); /* bayangan lebih dalam */
+    }
+
+    .gambar {
+        border-radius: 20px;
+        height:270px;
+        width: 200px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+    }
+
+    .box:hover .gambar {
+        transform: scale(1.1);
+    }
+</style>
+</head>
+<body>
+    <div class="bubble bubble1"></div>
+    <div class="bubble bubble2"></div>
+    <div class="bubble bubble3"></div>
+
+    <div class="container">
+        <div class="container1">
+            <div class="wrapper">    
+                <div class="box">
+                    <img src="cerita1.png" alt="" class="gambar">
+                </div>
+                <div class="box">
+                    <img src="cerita2.png" alt="" class="gambar">
+                </div>
+                <div class="box">
+                    <img src="Cokelat Biru Ilustrasi Cerita Sampul Buku.png" alt="" class="gambar">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

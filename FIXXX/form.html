@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jollify</title>
+  <style>
+    :root {
+      --kuning-muda: #FFF7AD;
+      --merah-muda: #FFB3AE;
+      --magenta: #FF49C1;
+      --ungu-gelap: #6A1452;
+      --ungu-tua: #44133E;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, var(--ungu-tua) 0%, var(--ungu-gelap) 100%);
+      color: var(--kuning-muda);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+      width: 100%;
+    }
+
+    .hero h1 {
+      font-size: 2.2rem;
+      margin-bottom: 20px;
+      color: var(--merah-muda);
+      max-width: 800px;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+      max-width: 600px;
+      line-height: 1.6;
+    }
+
+    .login-container {
+      background: rgba(255, 179, 174, 0.1);
+      padding: 30px;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 179, 174, 0.2);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .icon-profile {
+      background: var(--magenta);
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      margin: 0 auto 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: var(--kuning-muda);
+      font-weight: bold;
+      font-size: 32px;
+    }
+
+    h2 {
+      margin: 10px 0 20px;
+      color: var(--merah-muda);
+    }
+
+    #message {
+      color: var(--merah-muda);
+      font-size: 0.9em;
+      display: none;
+      margin: 10px 0;
+    }
+
+    #error-message {
+      color: var(--magenta);
+      font-size: 0.9em;
+      margin: 10px 0;
+      display: none;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 14px;
+      margin: 10px 0;
+      background: rgba(255, 179, 174, 0.15);
+      border: none;
+      color: var(--kuning-muda);
+      border-bottom: 2px solid var(--magenta);
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+
+    input::placeholder {
+      color: rgba(255, 179, 174, 0.7);
+    }
+
+    .btn-container {
+      position: relative;
+      height: 60px;
+      margin-top: 25px;
+    }
+
+    #login-btn {
+      position: absolute;
+      padding: 14px 30px;
+      background: var(--magenta);
+      color: var(--kuning-muda);
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      font-size: 1rem;
+      box-shadow: 0 4px 10px rgba(255, 73, 193, 0.3);
+    }
+
+    #login-btn:hover:not(:disabled) {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(255, 73, 193, 0.4);
+      background: var(--merah-muda);
+      color: var(--ungu-tua);
+    }
+
+    #login-btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    .shift-left {
+      left: 0;
+      top: 0;
+    }
+
+    .shift-right {
+      right: 0;
+      top: 0;
+    }
+
+    .shift-top {
+      top: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .shift-bottom {
+      top: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 1.8rem;
+      }
+      
+      .hero p {
+        font-size: 1rem;
+      }
+      
+      .login-container {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <section class="hero">
+    <h1>Selamat Datang di BelanjaYuk</h1>
+    <p>Masukkan nama Anda untuk memulai pengalaman berbelanja yang menyenangkan!</p>
+    
+    <div class="login-container">
+      <div class="icon-profile">
+        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+      </div>
+      <h2>MASUKKAN NAMA ANDA</h2>
+      <p id="message">Nama sudah benar! Silakan masuk</p>
+      <p id="error-message">Nama harus diisi</p>
+
+      <input type="text" id="name" placeholder="Nama Anda">
+
+      <div class="btn-container">
+        <button id="login-btn" class="shift-left">Masuk</button>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const nameInput = document.querySelector('#name');
+    const btn = document.querySelector('#login-btn');
+    const msg = document.querySelector('#message');
+    const errorMsg = document.querySelector('#error-message');
+
+    const positions = ['shift-left', 'shift-top', 'shift-right', 'shift-bottom'];
+
+    // Awal: disable tombol & posisi awal
+    btn.disabled = true;
+    btn.classList.add('shift-left');
+    msg.style.display = 'none';
+    errorMsg.style.display = 'none';
+
+    // Cek input: kalau sudah diisi, enable tombol
+    nameInput.addEventListener('input', checkInput);
+
+    function checkInput() {
+      const isFilled = nameInput.value.trim() !== '';
+
+      if (isFilled) {
+        btn.disabled = false;
+        msg.style.display = 'block';
+        errorMsg.style.display = 'none';
+        btn.classList.remove(...positions);
+        btn.style.position = 'static';
+      } else {
+        btn.disabled = true;
+        msg.style.display = 'none';
+        btn.style.position = 'absolute';
+        if (!positions.some(p => btn.classList.contains(p))) {
+          btn.classList.add('shift-left');
+        }
+      }
+    }
+
+    // Saat mouse mendekat, tombol kabur kalau input belum diisi
+    btn.addEventListener('mouseenter', () => {
+      const isFilled = nameInput.value.trim() !== '';
+      if (!isFilled) {
+        shiftButton();
+      }
+    });
+
+    function shiftButton() {
+      const currentPosition = positions.find(p => btn.classList.contains(p)) || 'shift-left';
+      const currentIndex = positions.indexOf(currentPosition);
+      const nextIndex = (currentIndex + 1) % positions.length;
+      const nextPosition = positions[nextIndex];
+
+      btn.classList.remove(currentPosition);
+      btn.classList.add(nextPosition);
+    }
+
+    // Fungsi untuk menyimpan nama dan redirect
+    btn.addEventListener('click', () => {
+      if (nameInput.value.trim() !== "") {
+        // Simpan nama pengguna di localStorage
+        localStorage.setItem('userName', nameInput.value.trim());
+        
+        // Redirect ke halaman utama setelah 1 detik
+        setTimeout(() => {
+          window.location.href = 'landing.html';
+        }, 1000);
+      } else {
+        errorMsg.style.display = 'block';
+        msg.style.display = 'none';
+        
+        // Gerakkan tombol login
+        btn.classList.remove(...positions);
+        btn.classList.add('shift-right');
+      }
+    });
+
+    // Cek jika sudah ada nama, langsung arahkan ke landing page
+    if (localStorage.getItem('userName')) {
+      window.location.href = 'landing.html';
+    }
+  </script>
+</body>
+</html>

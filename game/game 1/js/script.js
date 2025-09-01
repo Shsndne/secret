@@ -68,7 +68,7 @@ fetch("json/data.json")
 
     function startGame() {
     // Guard kalau storyData belum loaded
-    const cfg = (storyData && storyData.gameConfig) ? storyData.gameConfig : { timeLimit: 35, targetScore: 15, moleInterval: 2000 };
+    const cfg = (storyData && storyData.gameConfig) ? storyData.gameConfig : { timeLimit: 15, targetScore: 10, moleInterval: 2000 };
 
     // Reset
     clearInterval(timerId);

@@ -20,8 +20,8 @@
         "bad": "Tikus-tikus nakal berhasil mengacak-acak dapur Luma. Banyak kue yang hilang dan bahan makanan rusak. Luma sedih, tapi ia berjanji akan melatih diri lebih keras untuk menghadapi tikus-tikus itu lain kali."
       },
       "gameConfig": {
-        "timeLimit": 35,
-        "targetScore": 15,
+        "timeLimit": 15,
+        "targetScore": 10,
         "moleInterval": 2000
       }
     }

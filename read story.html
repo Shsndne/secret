@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Halaman Cerita</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Chewy&family=Baloo+2:wght@400;600&display=swap" rel="stylesheet"/>
+
+  <style>
+    :root{
+      --yellow:#FFF7AD;
+      --peach:#FFB3AE;
+      --pink:#FF49C1;
+      --purple:#6A1452;
+      --maroon:#44113E;
+      --glass:rgba(255,255,255,.15);
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:"Baloo 2", system-ui, -apple-system, Arial, sans-serif;
+      color:#fff;
+      height:100vh; 
+      background: linear-gradient(135deg, var(--pink) 0%, var(--purple) 60%, var(--yellow) 120%);
+      display:flex;
+      overflow:hidden; 
+    }
+
+    /* Layout */
+    .sidebar{
+      width:320px;
+      padding:20px;
+      background: var(--glass);
+      backdrop-filter: blur(6px);
+      overflow-y:auto;
+      border-right:2px solid rgba(255,255,255,.25);
+    }
+    .main{
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      padding:28px;
+      gap:18px;
+      overflow:hidden; 
+    }
+
+    .book-item{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      background: rgba(255,255,255,.18);
+      border:1px solid rgba(255,255,255,.25);
+      padding:12px;
+      border-radius:14px;
+      cursor:pointer;
+      transition: transform .2s, background .2s, box-shadow .2s;
+    }
+    .book-item + .book-item{ margin-top:12px; }
+    .book-item:hover{ transform: translateY(-2px); background: rgba(255,255,255,.28); box-shadow:0 8px 16px rgba(0,0,0,.18); }
+    .cover{
+      width:56px; height:80px; border-radius:8px; object-fit:cover;
+      box-shadow:0 4px 10px rgba(0,0,0,.35); border:2px solid rgba(255,255,255,.4);
+      background: var(--peach);
+    }
+    .meta h4{
+      margin:0; font-family:"Chewy", cursive; letter-spacing:.3px; font-size:18px;
+    }
+    .meta .genre{
+      margin:2px 0 0; font-size:12px; color:#f9eefe;
+    }
+
+    /* Story area */
+    .title{
+      margin:0;
+      font-family:"Chewy", cursive;
+      font-size:32px;
+      color:#fff;
+      text-shadow:0 2px 0 rgba(0,0,0,.15);
+    }
+    .panel{
+      flex:1;
+      background: rgba(0,0,0,.18);
+      border:1px solid rgba(255,255,255,.25);
+      border-radius:18px;
+      padding:22px;
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+      box-shadow:0 12px 24px rgba(0,0,0,.18);
+      overflow-y:auto; 
+      min-height:0; 
+    }
+
+    .story{
+      font-size:18px;
+      line-height:1.75;
+      background-color: #FFF7AD; 
+      padding: 20px;
+      border-radius: 12px;
+      color: #333; 
+      border:1px dashed rgba(255,255,255,.25);
+      opacity:0; transform: translateY(6px);
+      animation: reveal .45s ease forwards;
+      white-space: pre-line;
+    }
+    @keyframes reveal{
+      to{ opacity:1; transform:none; }
+    }
+
+    .btn-game{
+      align-self:center;
+      margin-top:20px;
+      padding:12px 20px;
+      background: var(--pink);
+      color:#fff;
+      border:none;
+      border-radius:12px;
+      font-weight:700;
+      cursor:pointer;
+      box-shadow:0 6px 14px rgba(0,0,0,.25);
+      transition: all .2s;
+    }
+    .btn-game:hover{ background: var(--purple); transform:translateY(-2px); }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar kiri: pilihan buku -->
+  <aside class="sidebar" id="sidebar"></aside>
+
+  <!-- Area kanan: cerita -->
+  <main class="main">
+    <h1 class="title" id="storyTitle">Select Book</h1>
+
+    <section class="panel">
+      <div class="story" id="storyContent">…</div>
+      <button class="btn-game" id="gameBtn" style="display:none;" onclick="goToGame()">Next</button>
+    </section>
+  </main>
+
+  <script>
+    // ====== DATA CERITA ======
+    const LIBRARY = [
+      {
+        id: "story1",
+        title: "Si Tikus Pencuri Kebun",
+        genre: "Fantasi Animasi",
+        cover: "landing page/cerita1.png",
+        content: `Di sebuah desa kecil yang damai, hiduplah seekor kelinci bernama Luma. Ia dikenal sebagai kelinci yang ceria dan rajin bekerja. Luma sangat suka berkebun. Setiap pagi, ia pergi ke perkebunannya yang luas dengan membawa keranjang rotan di punggungnya.",
+        Di perkebunan itu tumbuh berbagai macam tanaman: wortel segar berwarna oranye, stroberi merah yang manis, jagung kuning yang tinggi menjulang, hingga labu besar yang bulat. Ada juga bunga-bunga kecil yang tumbuh di pinggir kebun, membuat tempat itu selalu indah dipandang. Burung-burung berkicau, kupu-kupu beterbangan, dan udara pagi terasa sejuk.",
+        Warga desa sangat senang dengan hasil kebun Luma. Setiap minggu mereka datang untuk membeli sayuran dan buah-buahan segar. Dari hasil panennya, Luma juga sering membuat kue manis untuk dibagikan kepada tetangga. Kehidupan di desa itu pun terasa hangat dan penuh kebahagiaan.",
+        
+        Namun, kebahagiaan itu tidak bertahan lama. Beberapa hari terakhir, muncul masalah besar. Tikus-tikus nakal datang dan mulai merusak perkebunan. Mereka menggali lubang di tanah, muncul tiba-tiba, lalu menggigit wortel, mencuri stroberi, bahkan menyeret jagung ke dalam sarang mereka.",
+        “Oh tidak...” seru Luma ketika melihat kebunnya. “Kalau begini terus, seluruh panen bisa hilang! Bagaimana aku bisa membuat sup untuk teman-temanku?”",
+        Hari demi hari, tikus-tikus itu semakin berani. Mereka muncul di pagi hari, sore hari, bahkan kadang saat malam tiba. Tanaman Luma semakin berkurang, dan keranjang panennya tidak lagi penuh seperti biasanya.",
+        Luma mulai gelisah. “Aku tidak bisa membiarkan ini terus terjadi. Aku harus melindungi kebunku” ucapnya dengan wajah serius.",
+        
+        Malam itu, setelah membereskan keranjangnya, Luma duduk di gubuk kecil di tepi perkebunan. Ia berpikir keras mencari solusi. Tiba-tiba matanya tertuju pada sebuah palu kayu kecil yang tergantung di dinding. Itu adalah palu tua yang dulu digunakan ayahnya untuk memecah kacang.",
+        Luma menatap palu itu lekat-lekat, lalu tersenyum. “Ya! Dengan palu ini, aku bisa menjaga kebunku dari tikus-tikus nakal!” katanya penuh semangat.",
+        
+        Keesokan paginya, Luma sudah bersiap lebih awal. Ia berdiri tegak di tengah kebunnya, palu kayu di tangan, matanya awas menatap lubang-lubang di tanah. Angin bertiup pelan, daun-daun bergetar, dan suasana terasa tegang.",
+        Tiba-tiba... “plop!” Seekor tikus kecil muncul dari sebuah lubang, membawa wortel di tangannya. Luma segera melompat mendekat. Beberapa detik kemudian, tikus lain muncul dari lubang yang berbeda. Semakin lama, semakin banyak tikus bermunculan, berlari cepat di antara sayuran.",
+        Inilah waktunya permainan!",
+        Kamu harus membantu Luma menangkap tikus-tikus yang muncul dari berbagai lubang. Semakin banyak tikus yang tertangkap, semakin sedikit hasil panen yang hilang.`
+      },
+      {
+        id: "story2",
+        title: "Petualangan Arlo di Negeri Ajaib",
+        genre: "Animasi Fantasi Petualangan",
+        cover: "landing page/cerita2.png",
+        content: `Di kota ajaib Cardonia, rumah-rumah berbentuk jamur dan jalanan pelangi membuat siapa pun tersenyum saat melewatinya. Di pusat kota, terdapat perpustakaan magis yang dipenuhi kartu-kartu ajaib. Setiap kartu menyimpan gambar makhluk lucu, bintang berkilau, atau alat sihir imut yang bersinar lembut.",
+        Seorang pemuda kecil bernama Arlo diberi tugas spesial: menemukan pasangan kartu yang sama agar pintu rahasia perpustakaan terbuka. Pintu itu konon akan menampilkan dunia penuh cahaya dan teman-teman magis yang menunggu untuk bermain.",
+        Setiap hari, Arlo masuk ke perpustakaan yang harum dengan aroma buku dan permen kapas. Di meja panjang, ribuan kartu berwarna-warni terhampar. Beberapa kartu terlihat saat disentuh, sementara yang lain menunggu untuk ditemukan. Arlo harus mengingat setiap posisi dengan teliti.",
+        
+        Hari pertama, Arlo mencoba beberapa kartu. Ia menemukan pasangan kelinci bersayap yang menggemaskan, dan sepasang botol sihir mini yang meneteskan cahaya pelangi. Ia tersenyum, matanya berbinar karena kegembiraan.",
+        Hari-hari berikutnya, Arlo semakin terampil. Ia mulai mengingat pola dan warna setiap kartu. Tapi beberapa kartu menipu matanya: terlihat mirip, tapi bukan pasangan yang sama. Arlo tertawa geli setiap kali salah mencocokkan dan mendengar suara ‘pop’ lucu dari kartu.",
+        Suatu sore, saat cahaya matahari menembus jendela kaca berwarna, Arlo duduk sambil menata kartu. Ia membuat strategi: kelompokkan makhluk lucu di satu sisi, bintang berkilau di sisi lain, dan alat sihir mini di tengah. Cara ini membuatnya lebih cepat menemukan pasangan.",
+        Tantangan terbesar muncul saat kartu-kartu tersembunyi di pojok meja panjang. Arlo harus mengingat dengan seksama, dan setiap gerakan terasa seperti permainan menebak dengan teman-teman peri yang mengintip dari rak buku.",
+        
+        Malamnya, lampu peri di perpustakaan berkedip lembut, menciptakan bayangan berwarna. Arlo membuka satu kartu terakhir yang sulit diingat. Ia tersenyum, menarik napas dalam, dan menebak dengan hati-hati. Pasangan itu cocok! Cahaya lembut memancar, dan pintu rahasia mulai terbuka perlahan.",
+        Arlo melompat kegirangan. Dari balik pintu, dunia penuh warna, makhluk lucu, dan gulungan buku ajaib menantinya. Ia menari kecil karena bahagia, dikelilingi teman-teman peri yang menatap dengan senyum manis.",
+        Inilah waktunya permainan!",
+        Bantu Arlo menemukan semua pasangan kartu yang sama. Semakin cepat dan tepat menemukan pasangan, semakin cepat pintu rahasia perpustakaan terbuka dan semakin banyak teman magis yang muncul untuk bermain bersama.`
+      },
+      {
+        id: "story3",
+        title: "Kio Peramu Kecil",
+        genre: "Misteri Animasi",
+        cover: "landing page/cerita3.png",
+        content: `Di sebuah kota kecil bernama Chemiville, berdiri laboratorium ajaib tempat para murid belajar menggabungkan unsur menjadi senyawa. Laboratorium itu dipenuhi rak tinggi dengan kartu-kartu unsur yang melayang seperti kupu-kupu bercahaya.",
+        Hari itu, seorang murid bernama Kio memasuki laboratorium untuk pertama kalinya. Matanya berbinar penuh rasa ingin tahu. Ia melihat kartu unsur Air, Api, Tanah, dan Udara yang tersenyum lucu seolah siap untuk dimainkan.",
+        
+        Seorang profesor ramah bernama Prof. Lumina menyambut Kio. Ia menyerahkan sebuah Buku Senyawa kosong. 'Tugasmu adalah mengisi buku ini dengan sebanyak mungkin senyawa. Gabungkan kartu unsur dengan tepat, maka halaman buku akan bersinar. Tapi hati-hati, kombinasi yang salah akan memunculkan Awan Gelap.'",
+        Kio pun mulai mencoba. Saat Air digabungkan dengan Api, muncullah kartu baru: Uap Hangat, yang melayang sambil berkata 'poff!'. Halaman pertama buku pun bersinar lembut.",
+        
+        Hari-hari berikutnya, Kio mengumpulkan unsur baru dari berbagai tempat: Cahaya dari taman bunga, Es dari gua beku, dan Logam dari sungai berkilau. Setiap kartu unsur memiliki kepribadian unik—ada yang suka bercanda, ada yang suka bernyanyi.",
+        Namun, beberapa percobaan salah menimbulkan Awan Gelap yang menutupi sebagian buku. 'Jangan takut gagal,' kata Prof. Lumina. 'Setiap alkemis hebat belajar dari percobaannya.'",
+        Semakin banyak kombinasi yang berhasil, semakin indah hasilnya: Tanah dan Air menjadi Tanaman Kecil, Tanaman dan Cahaya menjadi Bunga Pelangi, Logam dan Api menghasilkan Pedang Mini Berkilau. Buku Senyawa Kio makin penuh warna dan berkilau.",
+        
+        Tibalah malam purnama, tantangan terakhir Kio. Semua murid berkumpul di laboratorium untuk melihat hasil karyanya. Kio harus menempelkan kartu terakhir dengan hati-hati.",
+        Halaman buku bergetar, cahaya hangat memenuhi ruangan, dan semua unsur menari gembira. Kini, hasil akhirnya bergantung pada seberapa banyak senyawa yang berhasil kamu buat bersama Kio.",
+        Inilah waktunya permainan!",
+        Bantu Kio menggabungkan kartu unsur menjadi senyawa ajaib. Semakin banyak senyawa yang berhasil dibuat, semakin terang cahaya laboratorium dan semakin indah halaman Buku Senyawa Ajaib.`
+      }
+    ];
+
+    let currentStoryId = null;
+
+    const sidebar = document.getElementById("sidebar");
+    const storyTitle = document.getElementById("storyTitle");
+    const storyContent = document.getElementById("storyContent");
+    const gameBtn = document.getElementById("gameBtn");
+
+    function renderSidebar(){
+      sidebar.innerHTML = "";
+      LIBRARY.forEach(b => {
+        const item = document.createElement("div");
+        item.className = "book-item";
+        item.onclick = () => selectStory(b.id);
+
+        const img = document.createElement("img");
+        img.className = "cover";
+        img.src = b.cover; img.alt = b.title;
+
+        const meta = document.createElement("div");
+        meta.className = "meta";
+        meta.innerHTML = `<h4>${b.title}</h4><div class="genre">${b.genre}</div>`;
+
+        item.appendChild(img); item.appendChild(meta);
+        sidebar.appendChild(item);
+      });
+    }
+
+    function selectStory(storyId){
+      const story = LIBRARY.find(s => s.id === storyId);
+      if(!story) return;
+      currentStoryId = storyId;
+
+      storyTitle.textContent = story.title;
+      storyContent.textContent = story.content;
+      gameBtn.style.display = "block";
+
+      // simpan progress
+      localStorage.setItem("selectedStoryId", storyId);
+    }
+
+    function goToGame(){
+      alert("Ke halaman game untuk " + currentStoryId);
+    }
+
+    (function init(){
+      renderSidebar();
+      const savedId = localStorage.getItem("selectedStoryId");
+      if(savedId && LIBRARY.some(s => s.id === savedId)){
+        selectStory(savedId);
+      }
+    })();
+  </script>
+</body>
+</html>

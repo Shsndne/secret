@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Landing Page</title>
+  <link href="https://fonts.googleapis.com/css2?family=Chewy&family=Baloo+2&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Baloo 2", sans-serif;
+      color: #44113E;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .animated-bg {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -2;
+      background: linear-gradient(270deg, #6A1452, #FFF7AD, #FFB3AE, #FF49C1);
+      background-size: 600% 600%;
+      animation: gradientShift 60s ease infinite;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* HEADER */
+    .header {
+      padding: 30px 20px;
+      text-align: center;
+      font-size: 2rem;
+      font-family: "Chewy", cursive;
+      color: white;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.4);
+      z-index: 1;
+    }
+
+    /* CONTAINER CARD */
+    .container {
+      flex: 1;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      display: grid;
+      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      z-index: 1;
+    }
+
+    .card {
+      background: #FFB3AE(255, 179, 174, 0.85);
+      border-radius: 14px;
+      padding: 12px;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+      text-decoration: none;
+      color: #44113E;
+      font-weight: bold;
+      font-size: 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      backdrop-filter: blur(4px);
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+    }
+
+    .card img {
+      max-width: 100%;
+      border-radius: 10px;
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="animated-bg"></div> <!-- background gradasi smooth -->
+
+  <!-- bubbles -->
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+
+  <div class="header">
+    ✨ Selamat Datang! Mau baca apa hari ini? 📚
+  </div>
+
+  <div class="container">
+    <a href="story story.html" class="card">
+      <img src="landing page/cerita1.png" alt="Si Tikus Pencuri Kebun">
+      Buku 1
+    </a>
+    <a href="cerita2.html" class="card">
+      <img src="landing page/cerita2.png" alt="Petualangan Arlo di Negeri Ajaib">
+      Buku 2
+    </a>
+    <a href="cerita3.html" class="card">
+      <img src="landing page/cerita3.png" alt="Kio Peramu Kecil">
+      Buku 3
+    </a>
+  </div>
+
+</body>
+</html>

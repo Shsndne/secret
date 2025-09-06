@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tikus Pencuri Kebun - Buku Cerita</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .book-container {
+            display: flex;
+            max-width: 1000px;
+            width: 100%;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .book-cover {
+            flex: 0 0 40%;
+            background: linear-gradient(135deg, #8bc34a 0%, #689f38 100%);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .book-cover::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect fill="white" opacity="0.05" x="0" y="0" width="100" height="100"/></svg>');
+            background-size: 20px 20px;
+        }
+        
+        .cover-title {
+            font-size: 28px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            z-index: 1;
+        }
+        
+        .cover-subtitle {
+            font-size: 18px;
+            text-align: center;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            z-index: 1;
+        }
+        
+        .cover-image {
+            width: 180px;
+            height: 180px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+        
+        .cover-author {
+            font-size: 16px;
+            text-align: center;
+            margin-top: 20px;
+            opacity: 0.9;
+            z-index: 1;
+        }
+
+        .img1 {
+            height: 355%;
+            width: 310%;
+        }
+        
+        .story-content {
+            flex: 0 0 60%;
+            padding: 40px;
+            background: white;
+            overflow-y: auto;
+            max-height: 600px;
+        }
+        
+        .story-title {
+            font-size: 24px;
+            color: #689f38;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .story-text {
+            line-height: 1.8;
+            color: #333;
+            font-size: 16px;
+            text-align: justify;
+        }
+        
+        .story-text p {
+            margin-bottom: 20px;
+        }
+        
+        .decoration {
+            text-align: center;
+            margin: 20px 0;
+            color: #8bc34a;
+            font-size: 24px;
+        }
+        
+        @media (max-width: 768px) {
+            .book-container {
+                flex-direction: column;
+            }
+            
+            .book-cover, .story-content {
+                flex: 1 1 100%;
+            }
+            
+            .book-cover {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="book-container">
+        <div class="book-cover">
+            <h1 class="cover-title">Batu Dan Manusia</h1>
+            <div class="cover-image">
+                <img src="https://raw.githubusercontent.com/Shsndne/secret/refs/heads/main/assetstory/batu%20dan%20manusia.png" class="img1">
+            </div>
+        </div>
+        
+        <div class="story-content">
+            <h2 class="story-title">Batu Dan Manusia</h2>
+            
+            <div class="story-text">
+                <p>Di sebuah negeri tua yang jauh dari peradaban modern, berdirilah gunung-gunung kokoh yang seakan menopang langit. Tanahnya subur, hutan hijau membentang, dan sungai mengalir bagaikan nadi kehidupan. Negeri itu dinamakan Ardhapada, sebuah negeri yang dipercaya oleh penduduknya lahir dari rahim batu.
+                </p>
+                
+                <p>Orang-orang Ardhapada percaya bahwa sebelum ada manusia, sebelum ada hutan dan sungai, yang pertama hadir adalah Batu Tertua. Batu itu berada di puncak gunung tertinggi, dikelilingi kabut, dan disebut sebagai Hati Bumi. Dari Batu Tertua itulah, perlahan tanah merekah, air memancar, pohon tumbuh, lalu kehidupan bermula.
+                </p>
+                
+                <div class="decoration">• • •</div>
+                
+                <p>Legenda itu diwariskan turun-temurun. Namun seiring waktu, manusia mulai lupa. Mereka melihat batu hanya sebagai benda mati: keras, dingin, tidak bernyawa. Batu dipahat menjadi patung, digilas menjadi kerikil, atau ditumpuk menjadi pondasi. Tidak ada lagi rasa hormat. Batu hanya dianggap alat.
+                </p>
+                
+                <div class="decoration">• • •</div>
+                
+                <p>Di desa kecil di kaki Gunung Ardhapada, hiduplah seorang pemuda bernama Sakala. Ia anak seorang penambang batu. Sehari-hari, ayahnya memecah batu dari tebing lalu menjualnya ke kota untuk bahan bangunan. Sakala tumbuh di antara bunyi palu yang menghantam batu, di antara debu dan serpihan keras yang berhamburan.
+
+                Sejak kecil, Sakala sering mendengar ayahnya berkata:
+                “Batu itu sumber rezeki kita. Tanpa batu, kita tak bisa makan.”
+
+                Namun dalam hati, Sakala menyimpan pertanyaan:
+                “Kalau batu benar sumber hidup, mengapa kita memukulnya, menghancurkannya, bahkan merendahkannya?”
+                </p>
+                <div class="decoration">• • •</div>
+                
+                <p>Rasa penasaran itu terus membesar. Hingga suatu malam, ketika bulan purnama menggantung di langit, Sakala mendengar suara aneh. Ia sedang beristirahat di dekat tumpukan batu di halaman rumah ketika suara berat, dalam, dan bergema berkata:
+
+                “Manusia muda… mengapa kalian memukul kami tanpa bertanya siapa kami?”
+
+                Sakala terperanjat. Ia menoleh ke sekeliling. Tak ada siapa-siapa. Suara itu jelas berasal dari batu besar yang ada di sampingnya. Batu yang setiap hari ia injak tanpa rasa.
+
+                Dengan suara bergetar, Sakala bertanya, “Siapa… siapa kau?”
+
+                “Aku hanyalah batu. Tapi lebih tua dari semua ayahmu, lebih lama dari semua leluhurmu. Aku melihat lahirnya negeri ini, aku menyaksikan ribuan generasi berlalu. Namun manusia hanya mengenalku sebagai benda mati,” jawab suara itu.
+
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style2.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Memo Match</title>
+    <style>
+        * {
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    text-align: center;
+    margin: 20px;
+}
+
+.status-container {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+#gameGrid {
+    display: grid;
+    grid-template-columns: repeat(6, 80px);
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.card {
+    width: 60px;
+    height: 80px;
+    position: relative;
+    cursor: pointer;
+}
+
+.card img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.card.matched {
+    border: 2px solid lightgreen;
+    cursor: default;
+}
+
+    </style>
+</head>
+<body>
+    <div id="storyContainer">
+        <h1 id="storyTitle"></h1>
+        <div id="storyText"></div>
+        <button id="startStoryBtn">Mulai Game</button>
+    </div>
+
+    <div id="gameWrapper" style="display:none;">
+        <div class="status-container">
+            <!-- <span>Skor: <span id="score">0</span></span> -->
+            <span>Timer: <span id="timer">0</span></span>
+            <span>Card Left: <span id="pairsLeft">0</span></span>
+        </div>
+        <div id="gameGrid"></div>
+    </div>
+
+    <div id="endModal" style="display:none;">
+        <h2></h2>
+        <p></p>
+        <button id="restart-btn">Ok</button>
+    </div>
+
+
+    <!-- JS -->
+<script>
+    let firstCard = null;
+let secondCard = null;
+let score = 0;
+let pairsLeft = 0;
+let storyData;
+let lockBoard = false;
+let timer;
+let timeLeft = 30;
+
+const cardLetters = ["b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q"];
+
+$(document).ready(async () => {
+    $("#gameWrapper, .status-container, #endModal").hide();
+
+    const storyId = 2;
+
+    try {
+        const res = await fetch("data.json");
+        const data = await res.json();
+        storyData = data.books.find(b => b.id === storyId);
+
+        $("#storyTitle").text(storyData.title);
+        $("#storyText").html(storyData.story.map(p => `<p>${p}</p>`).join(""));
+
+        pairsLeft = 6;
+        $("#pairsLeft").text(pairsLeft);
+    } catch (err) {
+        console.error("Gagal load JSON:", err);
+        $("#storyTitle").text("Arlo Memory Matching (offline)");
+        $("#storyText").html("<p>Tidak bisa memuat cerita.</p>");
+    }
+
+    $("#startStoryBtn").on("click", () => {
+        $("#startStoryBtn").hide();
+        $("#gameWrapper, .status-container").show();
+        startGame();
+        $('html, body').animate({ scrollTop: $("#gameWrapper").offset().top }, 300);
+    });
+
+    $("#restart-btn").on("click", () => {
+        clearInterval(timer);
+        $("#endModal, #gameWrapper").hide();
+        $("#storyContainer").show();
+        $("#startStoryBtn").show();
+        score = 0;
+        firstCard = null;
+        secondCard = null;
+        lockBoard = false;
+        pairsLeft = 6;
+        $("#score").text(score);
+        $("#pairsLeft").text(pairsLeft);
+        $("#gameGrid").html("");
+        timeLeft = storyData.gameConfig?.timeLimit || 30;
+        $("#timer").text(timeLeft);
+        window.scrollTo(0, 0);
+    });
+});
+
+function startGame() {
+    score = 0;
+    pairsLeft = 6;
+    lockBoard = false;
+
+    // Timer
+    timeLeft = storyData.gameConfig?.timeLimit || 30;
+    $("#timer").text(timeLeft);
+    clearInterval(timer);
+    timer = setInterval(() => {
+        timeLeft--;
+        $("#timer").text(timeLeft);
+        if(timeLeft <= 0){
+            clearInterval(timer);
+            showEnding();
+        }
+    }, 1000);
+
+    // Ambil 6 huruf unik
+    const letters = shuffleArray([...cardLetters]).slice(0, 6);
+
+    // Buat array kartu dengan pasangan yang benar
+    let cards = [];
+    letters.forEach(l => {
+        cards.push({value: l, img: `img/${l}.png`});
+        cards.push({value: l, img: `img/${l}.png`});
+    });
+
+    cards = shuffleArray(cards);
+
+    $("#gameGrid").html("");
+    cards.forEach(cardObj => {
+        $("#gameGrid").append(`
+            <div class="card" data-value="${cardObj.value}">
+                <img class="front" src="${cardObj.img}">
+                <img class="back" src="img/a.png">
+            </div>
+        `);
+    });
+
+    $(".card").on("click", function () {
+        handleFlip(this);
+    });
+
+    $("#score").text(score);
+    $("#pairsLeft").text(pairsLeft);
+}
+
+// Fisher-Yates shuffle stabil
+function shuffleArray(array) {
+    let currentIndex = array.length, randomIndex;
+    while (currentIndex != 0) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+        [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+    }
+    return array;
+}
+
+// Check apakah semua kartu sudah matched
+function allCardsMatched() {
+    return $(".card").toArray().every(c => $(c).hasClass("matched"));
+}
+
+// Check apakah semua kartu punya value sama (rest parameter)
+function checkPair(...cards) {
+    const values = cards.map(c => $(c).data("value"));
+    return values.every(v => v === values[0]);
+}
+
+// Handle flip pakai .some() dan checkPair
+function handleFlip(card) {
+    if ([firstCard, secondCard].some(c => c === card) || $(card).hasClass("matched") || lockBoard) return;
+
+    $(card).addClass("flipped");
+    $(card).find(".front").fadeIn(200);
+    $(card).find(".back").fadeOut(200);
+
+    if (!firstCard) {
+        firstCard = card;
+        return;
+    }
+    secondCard = card;
+    lockBoard = true;
+
+    if (checkPair(firstCard, secondCard)) {
+        $(firstCard).add(secondCard).addClass("matched").removeClass("flipped");
+        score++;
+        pairsLeft--;
+        $("#score").text(score);
+        $("#pairsLeft").text(pairsLeft);
+
+        firstCard = null;
+        secondCard = null;
+        lockBoard = false;
+
+        if (allCardsMatched()) {
+            clearInterval(timer);
+            showEnding();
+        }
+    } else {
+        setTimeout(() => {
+            $(firstCard).removeClass("flipped").find(".front").fadeOut(200).end().find(".back").fadeIn(200);
+            $(secondCard).removeClass("flipped").find(".front").fadeOut(200).end().find(".back").fadeIn(200);
+
+            firstCard = null;
+            secondCard = null;
+            lockBoard = false;
+        }, 700);
+    }
+}
+
+function showEnding() {
+    $("#gameWrapper").hide();
+    $("#endModal h2").text("Game Selesai!");
+
+    let endingText = "";
+    if (score === 6) endingText = storyData.ending.perfect;
+    else if (score >= 3) endingText = storyData.ending.medium;
+    else endingText = storyData.ending.bad;
+
+    $("#endModal p").html(endingText);
+    $("#endModal").show();
+}
+</script>
+</body>
+</html>

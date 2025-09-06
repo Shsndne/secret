@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tikus Pencuri Kebun - Buku Cerita</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .book-container {
+            display: flex;
+            max-width: 1000px;
+            width: 100%;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .book-cover {
+            flex: 0 0 40%;
+            background: linear-gradient(135deg, #8bc34a 0%, #689f38 100%);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .book-cover::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect fill="white" opacity="0.05" x="0" y="0" width="100" height="100"/></svg>');
+            background-size: 20px 20px;
+        }
+        
+        .cover-title {
+            font-size: 28px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            z-index: 1;
+        }
+        
+        .cover-subtitle {
+            font-size: 18px;
+            text-align: center;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            z-index: 1;
+        }
+        
+        .cover-image {
+            width: 180px;
+            height: 180px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+        
+        .cover-author {
+            font-size: 16px;
+            text-align: center;
+            margin-top: 20px;
+            opacity: 0.9;
+            z-index: 1;
+        }
+
+        .img1 {
+            height: 400%;
+            width: 400%;
+        }
+        
+        .story-content {
+            flex: 0 0 60%;
+            padding: 40px;
+            background: white;
+            overflow-y: auto;
+            max-height: 600px;
+        }
+        
+        .story-title {
+            font-size: 24px;
+            color: #689f38;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .story-text {
+            line-height: 1.8;
+            color: #333;
+            font-size: 16px;
+            text-align: justify;
+        }
+        
+        .story-text p {
+            margin-bottom: 20px;
+        }
+        
+        .decoration {
+            text-align: center;
+            margin: 20px 0;
+            color: #8bc34a;
+            font-size: 24px;
+        }
+        
+        @media (max-width: 768px) {
+            .book-container {
+                flex-direction: column;
+            }
+            
+            .book-cover, .story-content {
+                flex: 1 1 100%;
+            }
+            
+            .book-cover {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="book-container">
+        <div class="book-cover">
+            <h1 class="cover-title">Tikus Pencuri Kebun</h1>
+            <p class="cover-subtitle">Petualangan Luma Si Kelinci</p>
+            <div class="cover-image">
+                <img src="https://raw.githubusercontent.com/Shsndne/secret/refs/heads/main/assetstory/cerita1.png" class="img1">
+            </div>
+        </div>
+        
+        <div class="story-content">
+            <h2 class="story-title">Tikus Pencuri Kebun</h2>
+            
+            <div class="story-text">
+                <p>Di sebuah desa kecil yang damai, hiduplah seekor kelinci bernama Luma. Ia dikenal sebagai kelinci yang ceria dan rajin bekerja. Luma sangat suka berkebun. Setiap pagi, ia pergi ke perkebunannya yang luas dengan membawa keranjang rotan di punggungnya.</p>
+                
+                <p>Di perkebunan itu tumbuh berbagai macam tanaman: wortel segar berwarna oranye, stroberi merah yang manis, jagung kuning yang tinggi menjulang, hingga labu besar yang bulat. Ada juga bunga-bunga kecil yang tumbuh di pinggir kebun, membuat tempat itu selalu indah dipandang. Burung-burung berkicau, kupu-kupu beterbangan, dan udara pagi terasa sejuk.</p>
+                
+                <div class="decoration">• • •</div>
+                
+                <p>Marga desa sangat senang dengan hasil kebun Luma. Setiap minggu mereka datang untuk membeli sayuran dan buah-buahan segar. Dari hasil panennya, Luma juga sering membuat kue manis untuk dibagikan kepada tetangga. Kehidupan di desa itu pun terasa hangat dan penuh kebahagiaan.</p>
+                
+                <div class="decoration">• • •</div>
+                
+                <p>Namun, kebahagiaan itu tidak bertahan lama. Beberapa hari terakhir, muncul masalah besar. Tikus-tikus nakal datang dan mulai merusak perkebunan. Mereka menggali lubang di tanah, muncul tiba-tiba, lalu mencuri hasil panen yang sudah matang.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

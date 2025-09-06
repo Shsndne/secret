@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style3.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Crafting Game</title>
+    <style>
+        * {
+    font-family: 'Poppins', sans-serif;
+}
+
+.card {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 5px;
+    background: #f9f9f9;
+    cursor: pointer;
+}
+
+.card .emoji {
+    display: block;
+    font-size: 24px;
+}
+
+.status-container {
+    margin: 15px 0;
+}
+
+#craftResult {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+    </style>
+</head>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style3.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <div id="storyContainer">
+    <h1 id="storyTitle"></h1>
+    <div id="storyText"></div>
+    <button id="startStoryBtn">Mulai Game</button>
+    </div>
+
+    <div id="gameWrapper" style="display:none;">
+    <div class="status-container">
+        <span>Timer: <span id="timer">0</span></span>
+        <span>Crafted: <span id="score">0</span></span>
+    </div>
+
+    <div id="gameArea">
+        <div class="panel">
+        <h3>Inventory</h3>
+        <div id="inventoryGrid" class="grid"></div>
+        </div>
+
+        <div class="panel">
+        <h3>Crafting</h3>
+        <div class="slots">
+            <button id="slotA" class="slot" data-name=""><span class="emoji">?</span><span class="label">Slot A</span></button>
+            <button id="slotB" class="slot" data-name=""><span class="emoji">?</span><span class="label">Slot B</span></button>
+        </div>
+        <button id="craftBtn" class="primary">Craft!</button>
+        <div id="craftResult" class="result"></div>
+        </div>
+    </div>
+    </div>
+
+    <div id="endModal" style="display:none;">
+    <h2>Game Selesai!</h2>
+    <p></p>
+    <button id="restart-btn">Ok</button>
+    </div>
+
+<script>
+    let storyData;
+let timer;
+let timeLeft = 40;
+let score = 0;
+let craftedLog = []; // Catat semua craft sukses
+
+const ELEMENTS = [
+    { name: "Air", emoji: "💧" },
+    { name: "Api", emoji: "🔥" },
+    { name: "Tanah", emoji: "🌍" },
+    { name: "Udara", emoji: "💨" },
+    { name: "Cahaya", emoji: "☀️" },
+    { name: "Logam", emoji: "⚙️" }
+];
+
+// Minimal 8 kombinasi sukses
+const RECIPES = {
+    "Air+Api":       { name: "Uap Hangat", emoji: "💨" },
+    "Air+Tanah":     { name: "Tanaman Kecil", emoji: "🌱" },
+    "Air+Cahaya":    { name: "Pelangi", emoji: "🌈" },
+    "Api+Logam":     { name: "Perkakas Logam", emoji: "⚔️" },
+    "Api+Tanah":     { name: "Lava", emoji: "🌋" },
+    "Cahaya+Tanah":  { name: "Kristal", emoji: "💎" },
+    "Logam+Tanah":   { name: "Bijih Logam", emoji: "⛏️" },
+    "Cahaya+Udara":  { name: "Aurora", emoji: "🌌" }
+};
+
+$(document).ready(async () => {
+    $("#gameWrapper, .status-container, #endModal").hide();
+    const storyId = 3;
+
+    try {
+        const res = await fetch("data.json");
+        const data = await res.json();
+        storyData = data.books.find(b => b.id === storyId);
+
+        $("#storyTitle").text(storyData.title);
+        $("#storyText").html(storyData.story.map(p => `<p>${p}</p>`).join(""));
+        timeLeft = storyData.gameConfig?.timeLimit || 40;
+    } catch (err) {
+        console.error("Gagal load JSON:", err);
+        $("#storyTitle").text("Rahasia Kartu Senyawa (offline)");
+        $("#storyText").html("<p>Tidak bisa memuat cerita.</p>");
+    }
+
+    $("#startStoryBtn").on("click", () => {
+        $("#startStoryBtn").hide();
+        $("#gameWrapper, .status-container").show();
+        startCraftingGame();
+        $("html, body").animate({ scrollTop: $("#gameWrapper").offset().top }, 300);
+    });
+
+    $("#restart-btn").on("click", () => {
+        clearInterval(timer);
+        $("#endModal, #gameWrapper").hide();
+        $("#storyContainer").show();
+        $("#startStoryBtn").show();
+
+        // Reset state
+        score = 0;
+        craftedLog = [];
+        timeLeft = storyData?.gameConfig?.timeLimit || 40;
+        $("#timer").text(timeLeft);
+        $("#score").text(score);
+        $("#inventoryGrid").empty();
+        clearSlots();
+        $("#craftResult").empty();
+
+        window.scrollTo(0, 0);
+    });
+
+    $("#slotA, #slotB").on("click", function () {
+        setSlot(`#${this.id}`, "", "?", this.id === "slotA" ? "Slot A" : "Slot B");
+    });
+
+    $("#craftBtn").on("click", () => {
+        const a = $("#slotA").attr("data-name");
+        const b = $("#slotB").attr("data-name");
+
+        if (!(a && b)) {
+            $("#craftResult").text("Pilih 2 bahan dulu!");
+            return;
+        }
+
+        const result = craft(a, b);
+        if (result) {
+            if (!craftedLog.includes(result.name)) {
+                craftedLog.push(result.name);
+            }
+
+            // Hitung skor dengan reduce
+            score = craftedLog.reduce((total) => total + 1, 0);
+
+            $("#score").text(score);
+            $("#craftResult").html(
+                `✅ Berhasil: <strong>${a}</strong> + <strong>${b}</strong> → ${result.name} ${result.emoji}`
+            );
+
+            // Jika score mencapai 6, hentikan game & tampilkan ending
+            if (score >= 6) {
+                clearInterval(timer);
+                showEnding();
+                return;
+            }
+        } else {
+            $("#craftResult").html(
+                `❌ Kombinasi <strong>${a}</strong> + <strong>${b}</strong> tidak menghasilkan apa-apa...`
+            );
+        }
+
+        clearSlots();
+    });
+});
+
+function startCraftingGame() {
+    score = 0;
+    craftedLog = [];
+    $("#score").text(score);
+
+    renderInventory();
+    clearSlots();
+    $("#craftResult").text("");
+    startTimer();
+}
+
+function startTimer() {
+    clearInterval(timer);
+    $("#timer").text(timeLeft);
+    timer = setInterval(() => {
+        timeLeft--;
+        $("#timer").text(timeLeft);
+        if (timeLeft <= 0) {
+            clearInterval(timer);
+            showEnding();
+        }
+    }, 1000);
+}
+
+function renderInventory() {
+    const $grid = $("#inventoryGrid");
+    $grid.empty();
+
+    // Filter elemen yang belum di-craft
+    const availableElements = ELEMENTS.filter(el => !craftedLog.includes(el.name));
+
+    availableElements.forEach(el => {
+        const $card = $(`
+        <button class="card" data-name="${el.name}">
+            <span class="emoji">${el.emoji}</span>
+            <span class="label">${el.name}</span>
+        </button>
+        `);
+        $card.on("click", () => selectToSlot(el));
+        $grid.append($card);
+    });
+}
+
+function clearSlots() {
+    setSlot("#slotA", "", "?", "Slot A");
+    setSlot("#slotB", "", "?", "Slot B");
+}
+
+function setSlot(selector, name, emoji, labelText) {
+    $(selector)
+        .attr("data-name", name)
+        .find(".emoji").text(emoji).end()
+        .find(".label").text(labelText);
+}
+
+function selectToSlot(el) {
+    const slots = ["#slotA", "#slotB"];
+    const isFull = slots.some(sel => !$(sel).attr("data-name")) === false;
+    if (isFull) return;
+
+    const targetSel = slots.find(sel => !$(sel).attr("data-name"));
+    setSlot(targetSel, el.name, el.emoji, el.name);
+}
+
+function craft(...names) {
+    const key = [...names].sort().join("+");
+    return RECIPES[key] || null;
+}
+
+function showEnding() {
+    $("#gameWrapper").hide();
+    let endingType;
+
+    if (score >= 6) {
+        endingType = "perfect";
+    } else if (score > 0) {
+        endingType = "medium";
+    } else {
+        endingType = "bad";
+    }
+
+    $("#endModal h2").text("Game Selesai!");
+    $("#endModal p").html(
+        storyData?.ending?.[endingType] || "Terima kasih sudah bermain!"
+    );
+    $("#endModal").show();
+}
+
+</script>
+</body>
+</html>

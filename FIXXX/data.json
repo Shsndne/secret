@@ -1,0 +1,165 @@
+{
+  "books": [
+    {
+      "id": 1,
+      "title": "Petualangan Luma dan Tikus",
+      "story": [
+        "Luma segera melompat mendekat. Beberapa detik kemudian, tikus lain muncul dari lubang yang berbeda. Semakin lama, semakin banyak tikus bermunculan, berlari cepat di antara sayuran.",
+        "Inilah waktunya permainan!",
+        "Kamu harus membantu Luma menangkap tikus-tikus yang muncul dari berbagai lubang. Semakin banyak tikus yang tertangkap, semakin sedikit hasil panen yang hilang."
+      ],
+      "game": "hit-the-mole",
+      "ending": {
+        "perfect": "Dengan ketekunan dan palu kecilnya, Luma berhasil mengusir semua tikus dari kebunnya. Wortel, stroberi, jagung, dan labu tetap utuh. Panennya melimpah, dan Luma bisa membuat kue manis seperti biasanya. Warga desa pun datang lagi, senang dengan hasil kebunnya. Setiap akhir minggu, Luma mengadakan 'Festival Kue' untuk merayakan keberhasilan menjaga kebunnya.",
+        "medium": "Beberapa tikus masih berhasil mencuri sedikit bahan dari kebun, tapi Luma belajar trik baru untuk melindungi tanaman. Ia tetap bisa membuat kue lezat meski harus lebih berhati-hati. Warga desa tetap datang membeli hasil panen, dan Luma merasa lebih percaya diri menghadapi masalah di masa depan.",
+        "bad": "Tikus-tikus nakal berhasil merusak sebagian kebun Luma. Beberapa sayuran hilang dan bahan untuk kue rusak. Luma sedih melihat panennya berkurang, tapi ia berjanji akan berlatih lebih keras dan mencari cara baru agar tikus-tikus itu tidak mengganggu kebunnya lagi."
+      },
+      "gameConfig": {
+        "timeLimit": 15,
+        "targetScore": 7,
+        "moleInterval": 2000
+      }
+    },
+    {
+      "id": 2,
+      "title": "Arlo dan Kartu Ajaib Cardonia",
+      "story": [
+        "Arlo melompat kegirangan. Dari balik pintu, dunia penuh warna, makhluk lucu, dan gulungan buku ajaib menantinya. Ia menari kecil karena bahagia, dikelilingi teman-teman peri yang menatap dengan senyum manis.",
+        "Inilah waktunya permainan!",
+        "Bantu Arlo menemukan semua pasangan kartu yang sama. Semakin cepat dan tepat menemukan pasangan, semakin cepat pintu rahasia perpustakaan terbuka dan semakin banyak teman magis yang muncul untuk bermain bersama."
+      ],
+      "game": "memory-matching",
+      "ending": {
+        "perfect": "Arlo berhasil menemukan semua pasangan kartu dengan sempurna! Pintu rahasia terbuka sepenuhnya, menampakkan dunia penuh warna, makhluk lucu, bintang bersinar, dan gulungan buku ajaib. Arlo menjadi pahlawan kecil Cardonia, dan perpustakaan itu menjadi tempat bermain dan belajar yang paling ajaib.",
+        "medium": "Arlo menemukan sebagian besar pasangan kartu, tapi beberapa tersisa. Pintu rahasia terbuka sebagian, cahaya berkilau muncul, dan beberapa makhluk lucu menari di sekitarnya. Arlo belajar bahwa latihan dan kesabaran penting, dan ia tetap senang dengan pencapaiannya.",
+        "bad": "Arlo sering salah mengingat posisi kartu dan banyak pasangan yang tidak ditemukan. Pintu rahasia tetap tertutup, cahaya magis tidak muncul, dan Arlo sedikit kecewa. Namun ia tetap bersemangat untuk berlatih dan mencoba lagi di lain waktu, sambil ditemani suara tawa makhluk-makhluk lucu perpustakaan."
+      },
+      "gameConfig": {
+        "timeLimit": 30,
+        "totalPairs": 12,
+        "hintCooldown": 10
+      }
+    },
+    {
+      "id": 3,
+      "title": "Rahasia Kartu Senyawa di Chemiville",
+      "story": [
+        "Halaman buku bergetar, cahaya hangat memenuhi ruangan, dan semua unsur menari gembira. Kini, hasil akhirnya bergantung pada seberapa banyak senyawa yang berhasil kamu buat bersama Kio.",
+        "Inilah waktunya permainan!",
+        "Bantu Kio menggabungkan kartu unsur menjadi senyawa ajaib. Semakin banyak senyawa yang berhasil dibuat, semakin terang cahaya laboratorium dan semakin indah halaman Buku Senyawa Ajaib."
+      ],
+      "game": "inventory-crafting",
+      "ending": {
+        "perfect": "Kio berhasil mengisi buku dengan enam senyawa. Laboratorium bersinar secerah matahari pagi, kristal di dinding berkilau seperti bintang, dan semua murid bersorak riang. Prof. Lumina menobatkannya sebagai 'Alkemis Kecil Chemiville', dan Buku Senyawa berubah menjadi emas yang abadi.",
+        "medium": "Kio hanya berhasil mengisi buku dengan beberapa senyawa. Beberapa halaman buku masih kosong, tapi cahaya lembut tetap memancar. Prof. Lumina menepuk bahunya dengan senyum: 'Kau sudah melangkah jauh. Masih ada ruang untuk belajar, dan itu adalah bagian dari keajaiban.'",
+        "bad": "Kio gagal mengisi buku senyawa. Banyak percobaan gagal dan Awan Gelap menutupi sebagian laboratorium. Meski sedikit kecewa, Kio tidak putus asa. Prof. Lumina menunduk sambil berkata: 'Setukan alkemis hebat pernah gagal di awal. Besok, mari kita coba lagi bersama.'"
+      },
+      "gameConfig": {
+        "timeLimit": 40,
+        "totalPairs": 6,
+        "hintCooldown": 10
+      }
+    },
+    {
+      "id": 4,
+      "title": "Jus Segar di Pagi Hari",
+      "story": [
+        "Tiba-tiba, langit mulai cerah, dan matahari bersinar terik! Panasnya membuat semua orang haus, dan tak lama kemudian, barisan panjang pelanggan datang ke gerobak jus Rani. Jus segar menjadi rebutan!",
+        "Inilah waktunya permainan!",
+        "Bantu Rani memotong buah-buahan yang melayang dengan cepat. Semakin banyak buah yang berhasil dipotong, semakin banyak jus yang bisa dibuat untuk pelanggan yang haus."
+      ],
+      "game": "fruit-slicer",
+      "ending": {
+        "perfect": "Rani berhasil melayani semua pelanggan dengan sempurna! Jusnya menjadi terkenal di seluruh kota, dan gerobaknya selalu ramai dikunjungi. Rani bahkan bisa membuka cabang baru dan membantu keluarganya secara finansial.",
+        "medium": "Rani berhasil melayani sebagian besar pelanggan, tetapi beberapa pergi karena menunggu terlalu lama. Meski begitu, bisnisnya tetap berkembang dan pelanggan setia terus kembali.",
+        "bad": "Banyak pelanggan pergi karena kecewa menunggu terlalu lama. Rani sedih tetapi belajar bahwa dia perlu menyiapkan strategi yang lebih baik untuk hari-hari sibuk."
+      },
+      "gameConfig": {
+        "timeLimit": 20,
+        "targetScore": 15,
+        "fruitInterval": 1500
+      }
+    },
+    {
+      "id": 5,
+      "title": "Batu dan Manusia",
+      "story": [
+        "Batu itu bergetar lembut. Suara berat kembali terdengar: 'Hanya dengan kerendahan hati manusia bisa hidup berdampingan dengan kami.'",
+        "Inilah waktunya permainan!",
+        "Bantu Sakala menjawab pertanyaan-pertanyaan bijak dari batu. Semakin benar jawabanmu, semakin harmonis hubungan manusia dengan alam."
+      ],
+      "game": "wisdom-quiz",
+      "ending": {
+        "perfect": "Dengan kebijaksanaan yang didapat dari batu, manusia belajar hidup harmonis dengan alam. Negeri Ardhapada menjadi contoh perdamaian antara manusia dan bumi. Sakala dikenang sebagai guru bijak yang mengajarkan arti menghormati setiap unsur alam.",
+        "medium": "Manusia mulai mengurangi perusakan alam tetapi masih melakukan beberapa kesalahan. Mereka belajar untuk lebih bijak dalam memanfaatkan sumber daya, meski kadang masih lupa akan pelajaran dari batu.",
+        "bad": "Keserakahan manusia kembali muncul setelah beberapa generasi. Alam kembali murka, dan pelajaran dari Sakala hampir terlupakan. Namun, segelintir orang masih berusaha menjaga warisan kebijaksanaan itu."
+      },
+      "gameConfig": {
+        "timeLimit": 120,
+        "questions": 5,
+        "passingScore": 4
+      }
+    },
+    {
+      "id": 6,
+      "title": "Serangan Virus di Kota Robot",
+      "story": [
+        "Virus digital berwarna ungu langsung menyebar melalui jaringan kota, membuat robot-robot menjadi kacau!",
+        "Inilah waktunya permainan!",
+        "Bantu Riko memotong virus-virus digital sebelum mereka mencapai pusat energi kota. Semakin banyak virus yang dihancurkan, semakin aman Kota Neo-Tech."
+      ],
+      "game": "virus-slicer",
+      "ending": {
+        "perfect": "Kamu berhasil menghancurkan semua virus dengan sempurna! Kota Neo-Tech tidak hanya selamat tetapi menjadi lebih kuat dari sebelumnya. Riko dan para robot membangun museum untuk mengenang pertempuran ini, dan kamu menjadi duta perdamaian antara manusia dan robot.",
+        "medium": "Sebagian kecil virus berhasil lolos tetapi berhasil diisolasi. Kota Neo-Tech tetap aman tetapi membutuhkan waktu untuk perbaikan sistem. Kamu dan Riko bekerja sama mengembangkan antivirus untuk mencegah serangan di masa depan.",
+        "bad": "Banyak virus yang berhasil mencapai sistem sekunder. Meski kota berhasil diselamatkan, beberapa bagian harus dimatikan sementara. Riko dan timnya harus bekerja extra hard untuk memperbaiki kerusakan selama berminggu-minggu."
+      },
+      "gameConfig": {
+        "timeLimit": 25,
+        "targetScore": 20,
+        "virusSpeed": 3,
+        "levels": 5
+      }
+    },
+    {
+      "id": 7,
+      "title": "Si Kancil dan Ular Raksasa",
+      "story": [
+        "Kancil tahu ia tidak bisa melawan ular dengan kekuatan. Maka ia memutar otak untuk mencari cara menjebak Ular Raksasa.",
+        "Inilah waktunya permainan!",
+        "Bantu Kancil menggabungkan ide-ide cerdik untuk membuat rencana menjebak Ular Raksasa. Semakin tepat kombinasinya, semakin baik rencana yang terbentuk."
+      ],
+      "game": "puzzle-solver",
+      "ending": {
+        "perfect": "Kancil berhasil menipu Ular Raksasa. Semua hewan bekerja sama menutup gua dengan batu besar. Ular terjebak selamanya, dan hutan kembali damai. Sungai bisa dinikmati semua makhluk. Hewan-hewan berterima kasih pada Kancil, yang mengingatkan mereka bahwa kemenangan ini bukan hanya karena kecerdikan, melainkan karena kerja sama.",
+        "medium": "Kancil berhasil menipu Ular Raksasa masuk ke gua, namun batu yang menutup pintu gua tidak cukup rapat. Ular kadang masih bisa menyelinap keluar, meski tubuhnya terluka. Hewan-hewan bisa hidup lebih tenang, tapi selalu waspada karena ular bisa muncul kapan saja. Mereka belajar untuk selalu bersatu menjaga hutan.",
+        "bad": "Kancil terlalu percaya diri. Ia mencoba menjebak Ular, tapi gagal. Ular berhasil keluar dari gua dan makin marah. Hewan-hewan hutan menjadi ketakutan, sungai tetap dikuasai ular, dan hutan diliputi kegelapan. Kancil menyesali kesalahannya, berjanji akan mencari cara lain, namun untuk sementara Ular Raksasa tetap berkuasa."
+      },
+      "gameConfig": {
+        "timeLimit": 45,
+        "puzzlePieces": 8,
+        "hintCooldown": 15
+      }
+    },
+    {
+      "id": 8,
+      "title": "Ruang Hampa",
+      "story": [
+        "Dira mulai menulis, mencoba mengisi ruang hampa dalam dirinya dengan kata-kata.",
+        "Inilah waktunya permainan!",
+        "Bantu Dira menyusun kata-kata menjadi cerita yang indah. Semakin baik cerita yang terbentuk, semakin terisi ruang hampa dalam dirinya."
+      ],
+      "game": "word-weaver",
+      "ending": {
+        "perfect": "Dira berhasil berdamai dengan Hampa. Ia menulis dengan penuh semangat, hingga karyanya terkumpul menjadi sebuah buku yang diterbitkan. Buku itu menyentuh hati banyak orang, membuat mereka merasa tidak sendirian dalam menghadapi kehampaan hidup. Dira menyadari bahwa ruang kosong dalam dirinya telah menjadi sumber cahaya bagi orang lain.",
+        "medium": "Dira mulai menulis dan menemukan sedikit kedamaian. Ia membagikan tulisannya secara anonim di internet, dan meski tidak banyak yang membaca, ada beberapa orang yang tersentuh olehnya. Ia merasa lebih baik karena tahu tulisannya bisa memberi arti, walau kecil.",
+        "bad": "Dira mencoba menulis, namun rasa ragu dan hampa yang dalam terus menghantuinya. Ia tidak pernah menyelesaikan tulisannya, dan halaman-halaman tetap kosong. Hampa kembali menyelimutinya, bukan sebagai teman, tapi sebagai bayangan yang menelan harapan."
+      },
+      "gameConfig": {
+        "timeLimit": 60,
+        "wordCount": 200,
+        "minWords": 50
+      }
+    }
+  ]
+}

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hit the Mole</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        * {
+    font-family: 'Poppins', sans-serif;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    background: #fff;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+#modal, #endModal {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+#modal-content,
+#endModal .modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+}
+
+#modal-content h2,
+#endModal .modal-content h2 {
+    margin-top: 0;
+    }
+
+#start-btn,
+#endModal button {
+    display: block;
+    width: 40%;
+    margin: 20px auto 0;
+    padding: 10px 0;
+    border: none;
+    background: black;
+    color: white;
+    font-size: 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+}
+
+#start-btn:hover,
+#endModal button:hover {
+    background: #333;
+}
+
+.status-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+    width: 100%;
+    max-width: 400px;
+    flex-wrap: wrap;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
+.status-box {
+    background: white ;
+    border-radius: 25px;
+    box-shadow:
+        inset 0 4px 6px rgba(0, 0, 0, 0.5),
+        inset 0 -4px 6px rgba(255, 255, 255, 0.2); 
+    padding: 10px 30px;
+    font-size: 14px;
+    font-weight: 600;
+    min-width: 120px;
+    flex: 1 1 120px;
+    color: #333;
+    user-select: none;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+#game {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+    background-color: white;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(50, 100, 50, 0.3);
+    border: 3px solid white;
+    width: max-content;
+}
+
+.hole {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background: white ;
+    border-radius: 25px;
+    box-shadow:
+        inset 0 4px 6px rgba(0, 0, 0, 0.5),
+        inset 0 -4px 6px rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.mole {
+    width: 80%;
+    height: 80%;
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    cursor: pointer;
+}
+
+.mole img {
+    width: 100%;
+    height: auto;
+    display: block;
+    user-select: none;
+}
+
+    </style>
+</head>
+<body>
+    <!-- Story Container -->
+    <div id="storyContainer">
+        <h2 id="storyTitle"></h2>
+        <div id="storyText"></div>
+        <div id="storyAction">
+            <button id="startStoryBtn">Mulai Game</button>
+        </div>
+    </div>
+
+    <!-- Modal Start -->
+    <div id="modal" style="display:none;">
+        <div id="modal-content">
+            <h2>Wortel Dalam Bahaya!</h2>
+            <p>Cepat tangkap 15 tikus yang muncul sebelum mereka mencuri hasil panenmu!</p>
+            <button id="start-btn">Mulai</button>
+        </div>
+    </div>
+
+    <!-- Status -->
+    <div class="status-container">
+        <div class="status-box">Waktu: <span id="timer">15</span></div>
+        <div class="status-box">Skor: <span id="score">0</span></div>
+    </div>
+
+    <!-- Game Area -->
+    <div id="game" style="display:none;">
+        <div class="hole"><div class="mole"><img src="asset/8.png"></div></div>
+        <div class="hole"><div class="mole"><img src="asset/8.png"></div></div>
+        <div class="hole"><div class="mole"><img src="asset/8.png"></div></div>
+        <div class="hole"><div class="mole"><img src="asset/8.png"></div></div>
+        <div class="hole"><div class="mole"><img src="asset/8.png"></div></div>
+        <div class="hole"><div class="mole"><img src="asset/8.png"></div></div>
+        <div class="hole"><div class="mole"><img src="asset/8.png"></div></div>
+        <div class="hole"><div class="mole"><img src="asset/8.png"></div></div>
+        <div class="hole"><div class="mole"><img src="asset/8.png"></div></div>
+    </div>
+
+    <!-- End Modal -->
+    <div id="endModal" style="display:none;">
+        <div class="modal-content">
+            <h2></h2>
+            <p><span id="finalScore"></span></p>
+            <button id="restart-btn">OK</button>
+        </div>
+    </div>
+
+    <!-- JS -->
+</body>
+<script>
+let moleInterval, timerId, timeLeft, score, gameOver, storyData;
+
+// Load dan render story
+$(document).ready(async () => {
+    $("#modal, #title, .status-container, #game, #endModal").hide();
+
+    const storyId = 7;
+
+    try {
+        const res = await fetch("data.json");
+        const data = await res.json();
+        storyData = data.books.find(b => b.id === storyId);
+
+        $("#storyTitle").text(storyData.title);
+        $("#storyText").html(storyData.story.map(p => `<p>${p}</p>`).join(""));
+    } catch (err) {
+        console.error("Gagal load JSON:", err);
+        $("#storyTitle").text("Petualangan Luma (offline)");
+        $("#storyText").html("<p>Tidak bisa memuat cerita. Coba jalankan lewat server lokal.</p>");
+    }
+
+    // Tombol mulai game
+    $("#startStoryBtn").on("click", () => {
+        $("#startStoryBtn").hide();
+        $("#gameWrapper, #game, .status-container").show();
+
+        startGame();
+
+        $('html, body').animate({
+            scrollTop: $("#gameWrapper").offset().top
+        }, 300);
+    });
+
+    // Restart game
+    $("#restart-btn").on("click", () => {
+        $("#endModal, #gameWrapper").hide();
+        $("#storyContainer").show();
+        $("#startStoryBtn").show();
+        window.scrollTo(0, 0);
+    });
+
+    // Klik mole
+    $(document).on("click", ".mole", function () {
+        if (gameOver) return;
+        score++;
+        $("#score").text(score);
+        $(this).hide();
+    });
+});
+
+// Fungsi tampil mole
+const showMole = () => {
+    $(".mole").hide();
+    const moles = [...$(".mole")]; // spread operator
+    if (!moles.length) return;
+
+    const randomIndex = Math.floor(Math.random() * moles.length);
+    $(moles[randomIndex]).fadeIn(200);
+};
+
+// Fungsi start game
+const startGame = () => {
+    const { timeLimit = 35, targetScore = 15, moleInterval: interval = 2000 } = storyData?.gameConfig || {};
+
+    clearInterval(timerId);
+    clearInterval(moleInterval);
+
+    score = 0;
+    timeLeft = timeLimit;
+    gameOver = false;
+
+    $("#score").text(score);
+    $("#timer").text(timeLeft);
+    $(".mole").hide();
+    $("#endModal").hide();
+
+    moleInterval = setInterval(showMole, interval);
+
+    timerId = setInterval(() => {
+        timeLeft--;
+        $("#timer").text(timeLeft);
+
+        if (timeLeft <= 0) {
+            clearInterval(timerId);
+            clearInterval(moleInterval);
+            $(".mole").hide();
+            gameOver = true;
+
+            let endingKey;
+            switch (true) {
+                case score >= targetScore:
+                    endingKey = "perfect";
+                    break;
+                case score >= Math.ceil(targetScore / 2):
+                    endingKey = "medium";
+                    break;
+                default:
+                    endingKey = "bad";
+            }
+
+            const endingText = storyData?.ending?.[endingKey] || "Game selesai!";
+            const endingTitle = endingKey === "perfect" ? "Ending Bahagia" :
+                                endingKey === "medium" ? "Ending Sedang" :
+                                "Ending Sedih";
+
+            $("#endModal h2").text(endingTitle);
+            $("#endModal .modal-content p").html(`${endingText} <br>Skor: <span id="finalScore">${score}</span>`);
+            $(".status-container, #game").hide();
+            $("#endModal").fadeIn();
+        }
+    }, 1000);
+};
+</script>
+</html>

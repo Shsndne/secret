@@ -7,12 +7,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --kuning-muda: #FFF7AD;
-            --merah-muda: #FFB3AE;
-            --magenta: #FF49C1;
-            --ungu-gelap: #6A1452;
-            --ungu-tua: #44133E;
-            --background: linear-gradient(135deg, #44133E 0%, #6A1452 100%);
+            --primary-color: #3971b8;        /* Celtic Blue */
+            --second-color: #c8d69b;         /* Tea Green */
+            --text-color: #343b1b;           /* Drab Dark Brown */
+            --background-color: #fbfcee;     /* Nory */
+            --card-color: #ffffff;
+            --highlight-color: #f6e6c5;      /* Vanilla */
             --shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             --transition: all 0.3s ease;
         }
@@ -29,8 +29,8 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            background: var(--background);
-            color: white;
+            background: var(--background-color);
+            color: var(--text-color);
             overflow-x: hidden;
         }
 
@@ -40,9 +40,10 @@
             max-width: 1200px;
             margin: 0 auto;
             text-align: center;
-            background: var(--ungu-tua);
+            background: var(--primary-color);
             position: relative;
             overflow: hidden;
+            color: white;
         }
 
         .main-greeting {
@@ -62,7 +63,7 @@
             left: 0;
             width: 100%;
             height: 4px;
-            background: linear-gradient(90deg, transparent, var(--magenta), transparent);
+            background: linear-gradient(90deg, transparent, var(--second-color), transparent);
             border-radius: 2px;
         }
 
@@ -74,11 +75,12 @@
             max-width: 800px;
             margin-left: auto;
             margin-right: auto;
+            color: white;
         }
 
         .divider {
             height: 3px;
-            background: linear-gradient(90deg, transparent, var(--kuning-muda), transparent);
+            background: linear-gradient(90deg, transparent, var(--highlight-color), transparent);
             margin: 30px auto;
             width: 80%;
             max-width: 600px;
@@ -89,12 +91,12 @@
             font-size: 2rem;
             font-weight: bold;
             margin-bottom: 20px;
-            color: var(--kuning-muda);
+            color: var(--primary-color);
         }
 
         .explore-button {
             display: inline-block;
-            background: var(--magenta);
+            background: var(--primary-color);
             color: white;
             padding: 15px 35px;
             border-radius: 30px;
@@ -103,13 +105,13 @@
             font-size: 1.1rem;
             transition: var(--transition);
             margin-bottom: 30px;
-            box-shadow: 0 5px 15px rgba(255, 73, 193, 0.4);
+            box-shadow: 0 5px 15px rgba(57, 113, 184, 0.4);
         }
 
         .explore-button:hover {
-            background: var(--merah-muda);
+            background: #2c5a94;
             transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(255, 73, 193, 0.6);
+            box-shadow: 0 8px 20px rgba(57, 113, 184, 0.6);
         }
 
         /* ===== SE Search BAR ===== */
@@ -124,8 +126,8 @@
             padding: 15px 20px;
             border-radius: 30px;
             border: none;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--text-color);
             font-size: 1rem;
             padding-left: 50px;
             backdrop-filter: blur(5px);
@@ -135,9 +137,9 @@
 
         .search-box:focus {
             outline: none;
-            border-color: var(--magenta);
-            background: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 0 15px rgba(255, 73, 193, 0.3);
+            border-color: var(--second-color);
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 0 15px rgba(200, 214, 155, 0.3);
         }
 
         .search-icon {
@@ -145,7 +147,7 @@
             left: 20px;
             top: 50%;
             transform: translateY(-50%);
-            color: var(--kuning-muda);
+            color: var(--highlight-color);
             font-size: 1.2rem;
         }
 
@@ -155,7 +157,7 @@
             width: 100%;
             display: flex;
             flex-direction: column;
-            background: var(--ungu-gelap);
+            background: var(--background-color);
             padding: 40px 0;
             position: relative;
         }
@@ -164,7 +166,7 @@
             width: 90%;
             margin: 0 auto 40px;
             border-radius: 20px;
-            background: var(--ungu-tua);
+            background: var(--card-color);
             padding: 30px 20px;
             box-shadow: var(--shadow);
             position: relative;
@@ -186,22 +188,22 @@
         .story-box {
             height: 350px;
             width: 240px;
-            background: var(--ungu-gelap);
+            background: var(--card-color);
             border-radius: 15px;
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
             transition: var(--transition);
             cursor: pointer;
-            border: 2px solid var(--magenta);
+            border: 2px solid var(--primary-color);
             flex-shrink: 0;
         }
 
         .story-box:hover {
             transform: translateY(-5px);
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
-            border-color: var(--merah-muda);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+            border-color: var(--second-color);
         }
 
         .story-image-container {
@@ -210,7 +212,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: var(--ungu-tua);
+            background: var(--highlight-color);
         }
 
         .story-image {
@@ -227,30 +229,30 @@
         .story-info {
             padding: 15px;
             text-align: center;
-            background: var(--ungu-tua);
+            background: var(--card-color);
             flex-grow: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            border-top: 2px solid var(--magenta);
+            border-top: 2px solid var(--primary-color);
         }
 
         .story-title {
             font-weight: 600;
             margin: 0;
-            color: white;
+            color: var(--text-color);
             font-size: 1.1rem;
         }
 
         .story-author {
             font-size: 0.9rem;
-            color: var(--kuning-muda);
+            color: var(--primary-color);
             margin: 5px 0 0 0;
         }
 
         .story-rating {
             margin-top: 8px;
-            color: var(--kuning-muda);
+            color: #f39c12;
             font-size: 0.9rem;
         }
 
@@ -263,7 +265,7 @@
         }
 
         .carousel-btn {
-            background: var(--magenta);
+            background: var(--primary-color);
             color: white;
             border: none;
             width: 55px;
@@ -275,17 +277,17 @@
             align-items: center;
             justify-content: center;
             transition: var(--transition);
-            box-shadow: 0 5px 15px rgba(255, 73, 193, 0.4);
+            box-shadow: 0 5px 15px rgba(57, 113, 184, 0.4);
         }
 
         .carousel-btn:hover {
-            background: var(--merah-muda);
+            background: #2c5a94;
             transform: scale(1.05);
-            box-shadow: 0 8px 20px rgba(255, 73, 193, 0.6);
+            box-shadow: 0 8px 20px rgba(57, 113, 184, 0.6);
         }
 
         .carousel-btn:disabled {
-            background: var(--ungu-gelap);
+            background: #a0a0a0;
             cursor: not-allowed;
             transform: none;
             opacity: 0.6;
@@ -303,8 +305,8 @@
 
         .category-btn {
             padding: 8px 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid var(--magenta);
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid var(--primary-color);
             border-radius: 20px;
             color: white;
             cursor: pointer;
@@ -312,9 +314,9 @@
         }
 
         .category-btn:hover, .category-btn.active {
-            background: var(--magenta);
+            background: var(--primary-color);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 73, 193, 0.4);
+            box-shadow: 0 5px 15px rgba(57, 113, 184, 0.4);
         }
 
         /* ===== LOGOUT BUTTON ===== */
@@ -323,11 +325,11 @@
             display: flex;
             justify-content: center;
             margin-top: auto;
-            background: var(--ungu-tua);
+            background: var(--primary-color);
         }
 
         #logout-btn {
-            background: var(--magenta);
+            background: var(--primary-color);
             color: white;
             border: none;
             padding: 15px 30px;
@@ -339,22 +341,22 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            box-shadow: 0 5px 15px rgba(255, 73, 193, 0.4);
+            box-shadow: 0 5px 15px rgba(57, 113, 184, 0.4);
         }
 
         #logout-btn:hover {
-            background: var(--merah-muda);
+            background: #2c5a94;
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(255, 73, 193, 0.6);
+            box-shadow: 0 8px 20px rgba(57, 113, 184, 0.6);
         }
 
         /* ===== FOOTER ===== */
         footer {
             text-align: center;
             padding: 25px;
-            background: var(--ungu-tua);
+            background: var(--primary-color);
             color: white;
-            border-top: 2px solid var(--magenta);
+            border-top: 2px solid var(--second-color);
         }
 
         footer p {
@@ -385,7 +387,7 @@
         }
 
         .modal-content {
-            background: var(--ungu-tua);
+            background: var(--card-color);
             border-radius: 20px;
             width: 90%;
             max-width: 800px;
@@ -408,7 +410,7 @@
             right: 15px;
             font-size: 1.5rem;
             color: white;
-            background: var(--magenta);
+            background: var(--primary-color);
             width: 40px;
             height: 40px;
             border-radius: 50%;
@@ -420,7 +422,7 @@
         }
 
         .close-modal:hover {
-            background: var(--merah-muda);
+            background: #2c5a94;
             transform: rotate(90deg);
         }
 
@@ -456,24 +458,25 @@
 
         .book-detail-title {
             font-size: 2rem;
-            color: var(--kuning-muda);
+            color: var(--primary-color);
             margin-bottom: 10px;
         }
 
         .book-detail-author {
             font-size: 1.2rem;
-            color: var(--merah-muda);
+            color: var(--text-color);
             margin-bottom: 15px;
         }
 
         .book-detail-desc {
             line-height: 1.6;
             margin-bottom: 20px;
+            color: var(--text-color);
         }
 
         .read-btn {
             display: inline-block;
-            background: var(--magenta);
+            background: var(--primary-color);
             color: white;
             padding: 12px 25px;
             border-radius: 25px;
@@ -485,9 +488,9 @@
         }
 
         .read-btn:hover {
-            background: var(--merah-muda);
+            background: #2c5a94;
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 73, 193, 0.4);
+            box-shadow: 0 5px 15px rgba(57, 113, 184, 0.4);
         }
 
         /* ===== RESPONSIVE DESIGN ===== */
@@ -616,7 +619,7 @@
                                  alt="Longy" class="story-image">
                         </div>
                         <div class="story-info">
-                            <h3 class="story-title">Longy</h3>
+                            <h3 class="story-title">Tikus Pencuri Kebun</h3>
                             <p class="story-author">Penulis B</p>
                             <div class="story-rating">★★★★★</div>
                         </div>
@@ -628,7 +631,7 @@
                                  alt="Fuji Kaur" class="story-image">
                         </div>
                         <div class="story-info">
-                            <h3 class="story-title">Fuji Kaur</h3>
+                            <h3 class="story-title">Petualangan Arlo di Negeri Ajaib</h3>
                             <p class="story-author">Penulis C</p>
                             <div class="story-rating">★★★☆☆</div>
                         </div>
@@ -710,7 +713,7 @@
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2023 Perpustakaan Digital - All rights reserved</p>
+        <p>&copy; 2025 Jollify - All rights reserved</p>
     </footer>
 
     <!-- Book Detail Modal -->
@@ -731,7 +734,7 @@
             </div>
         </div>
     </div>
-
+    
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Ambil nama pengguna dari localStorage
@@ -866,23 +869,23 @@
                     title: "Batu dan Manusia",
                     author: "Penulis A",
                     rating: "★★★★☆",
-                    desc: "Sebuah cerita petualangan seru tentang perjalanan Kang mencari jati dirinya. Penuh dengan lika-liku kehidupan dan pelajaran berharga tentang persahabatan dan keberanian.",
+                    desc: "Di negeri Ardhapada, masyarakat hidup dari batu tanpa menyadari bahwa batu adalah penjaga kehidupan. Seorang pemuda bernama Sakala menemukan bahwa batu dapat berbicara dan menyimpan sejarah bumi. Ketika keserakahan penguasa Adhipa membuat gunung rusak dan menimbulkan bencana, hanya Sakala yang bisa menenangkan amarah batu dengan kerendahan hati. Dari pengalamannya, manusia akhirnya belajar untuk menghormati batu sebagai guru kehidupan, bukan sekadar benda mati.",
                     image: "https://raw.githubusercontent.com/Shsndne/secret/refs/heads/main/assetstory/batu%20dan%20manusia.png",
                     link: "readstory.html?id=story1" // Link khusus untuk buku ini
                 },
                 "longy": {
-                    title: "Longy",
+                    title: "Tikus Pencuri Kebun",
                     author: "Penulis B",
                     rating: "★★★★★",
-                    desc: "Longy adalah kisah misteri yang menegangkan tentang seorang detektif yang mencoba memecahkan kasus pembunuhan berantai yang membingungkan. Setiap bab akan membuat Anda semakin penasaran.",
+                    desc: "Luma, seekor kelinci ceria yang gemar berkebun, harus menghadapi serbuan tikus-tikus nakal yang merusak panennya. Dengan palu kayu peninggalan ayahnya, Luma bertekad melindungi kebunnya. Pemain akan membantu Luma menangkap tikus-tikus yang muncul dari lubang agar hasil panen tetap aman dan desa tetap bahagia.",
                     image: "https://raw.githubusercontent.com/Shsndne/secret/refs/heads/main/assetstory/cerita1.png",
                     link: "readstory.html?id=story2" // Link khusus untuk buku ini
                 },
                 "fuji-kaur": {
-                    title: "Fuji Kaur",
+                    title: "Petualangan Arlo di Negeri Ajaib",
                     author: "Penulis C",
                     rating: "★★★☆☆",
-                    desc: "Romansa yang mengharukan antara dua insan yang dipisahkan oleh takdir namun dipertemukan kembali oleh cinta. Cerita ini akan membuat Anda merasakan berbagai emosi.",
+                    desc: "Di kota magis Cardonia, Arlo mendapat tugas membuka pintu rahasia perpustakaan dengan cara mencocokkan pasangan kartu ajaib. Setiap pasangan yang berhasil ditemukan akan memunculkan cahaya dan makhluk lucu. Pemain harus membantu Arlo mengingat posisi kartu dan menemukan semua pasangannya agar pintu terbuka dan dunia penuh teman magis bisa dijelajahi.",
                     image: "https://raw.githubusercontent.com/Shsndne/secret/refs/heads/main/assetstory/cerita2.png",
                     link: "readstory.html?id=story3" // Link khusus untuk buku ini
                 },
@@ -890,7 +893,7 @@
                     title: "Jus Segar di Pagi Hari",
                     author: "Penulis D",
                     rating: "★★★★☆",
-                    desc: "Cerita inspiratif tentang pentingnya memulai hari dengan energi positif. Mengajarkan nilai-nilai kesehatan dan kebahagiaan dalam kehidupan sehari-hari.",
+                    desc: "Rani, penjual jus sederhana, kewalahan saat pelanggan berdatangan di hari yang panas. Pemain harus membantunya memotong buah-buahan segar dengan cepat untuk membuat jus yang menyegarkan. Semakin banyak buah yang dipotong, semakin banyak pelanggan puas, dan gerobak jus Rani pun menjadi terkenal di kota.",
                     image: "https://raw.githubusercontent.com/Shsndne/secret/refs/heads/main/assetstory/Warna%20Warni%20Ilustratif%20Buku%20Cerita%20Anak%20Cover.png",
                     link: "readstory.html?id=story4" // Link khusus untuk buku ini
                 },
@@ -898,7 +901,7 @@
                     title: "Kio Peramu Kecil",
                     author: "Penulis E",
                     rating: "★★★★☆",
-                    desc: "Petualangan magis Kio si peramu kecil dalam mencari ramuan langka untuk menyelamatkan desanya. Penuh dengan keajaiban dan tantangan yang harus dihadapi.",
+                    desc: "Di kota kecil Chemiville, murid bernama Kio belajar menggabungkan kartu unsur menjadi senyawa ajaib di bawah bimbingan Prof. Lumina. Setiap kombinasi yang benar membuat Buku Senyawa bersinar indah, sementara kombinasi salah menimbulkan Awan Gelap. Pemain harus membantu Kio menemukan kombinasi terbaik agar laboratorium penuh cahaya dan Buku Senyawa Ajaib semakin berkilau.",
                     image: "https://raw.githubusercontent.com/Shsndne/secret/refs/heads/main/assetstory/Cokelat%20Biru%20Ilustrasi%20Cerita%20Sampul%20Buku.png",
                     link: "readstory.html?id=story5" // Link khusus untuk buku ini
                 },
@@ -906,7 +909,7 @@
                     title: "Serangan Virus di Kota Robot",
                     author: "Penulis F",
                     rating: "★★★☆☆",
-                    desc: "Fiksi ilmiah yang menegangkan tentang kota robot yang menghadapi ancaman virus mematikan. Sebuah cerita tentang teknologi, persahabatan, dan keberanian.",
+                    desc: "Di Kota Robot, sebuah virus digital liar tiba-tiba menyebar dan membuat para robot kacau. Bersama Riko sang insinyur, pemain harus “slice” virus-virus yang beterbangan untuk menyelamatkan kota. Hapus semua virus, pulihkan stabilitas, dan jadilah pahlawan yang dikenang oleh seluruh robot!",
                     image: "https://raw.githubusercontent.com/Shsndne/secret/refs/heads/main/assetstory/Book%20Cover%20Rahasia%20Lorong%20Tua%20Illustratif%20Biru%20Putih.png",
                     link: "readstory.html?id=story6" // Link khusus untuk buku ini
                 },
@@ -914,7 +917,7 @@
                     title: "Kancil dan Ular",
                     author: "Penulis G",
                     rating: "★★★★★",
-                    desc: "Dongeng modern tentang kecerdikan Kancil yang harus menghadapi musuh barunya, Ular yang licik. Cerita penuh nilai moral dan kecerdikan.",
+                    desc: "Di tepi hutan, seekor ular besar yang licik mulai menguasai sungai dan menakuti semua hewan. Ia ingin menjadi penguasa tunggal dan memaksa siapa pun yang haus untuk tunduk padanya. Namun, Si Kancil yang cerdik tak tinggal diam. Dengan akal dan rencana cerdiknya, Kancil mengajak para hewan bekerja sama menjebak ular. Melalui kecerdikan dan persatuan, hewan-hewan berhasil membebaskan hutan dari ancaman sang Ular Raksasa.",
                     image: "https://raw.githubusercontent.com/Shsndne/secret/refs/heads/main/assetstory/kancil%20dan%20ular.png",
                     link: "readstory.html?id=story7" // Link khusus untuk buku ini
                 },
@@ -922,7 +925,7 @@
                     title: "Ruang Hampa",
                     author: "Penulis H",
                     rating: "★★★★☆",
-                    desc: "Sebuah novel psikologis yang mendalam tentang perjalanan seseorang menemukan arti kehidupan dalam kesendirian. Menggugah pikiran dan perasaan.",
+                    desc: "Dira, seorang pemuda yang hidup dalam rutinitas membosankan, merasa kesepian di apartemen kecilnya. Hingga suatu malam hujan, ia mendengar suara misterius yang menyebut dirinya Hampa. Dari sanalah Dira mulai menyadari bahwa kehampaan bukanlah musuh, melainkan ruang kosong yang menunggu untuk diisi. Perjalanan batin bersama Hampa membawanya pada pemahaman baru tentang hidup, kesepian, dan keberanian untuk berkarya.",
                     image: "https://raw.githubusercontent.com/Shsndne/secret/refs/heads/main/assetstory/Biru%20Gelap%20Ilustrasi%20Novel%20Cover%20Page.png",
                     link: "readstory.html?id=story8" // Link khusus untuk buku ini
                 }

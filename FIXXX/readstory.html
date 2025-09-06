@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Halaman Cerita</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Chewy&family=Baloo+2:wght@400;600&display=swap" rel="stylesheet"/>
+
+  <style>
+    :root{
+      --yellow:#FFF7AD;
+      --peach:#FFB3AE;
+      --pink:#FF49C1;
+      --purple:#6A1452;
+      --maroon:#44113E;
+      --glass:rgba(255,255,255,.15);
+    }
+
+    *{
+      box-sizing:border-box;
+      font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body{
+      margin:0;
+      color:#fff;
+      height:100vh; 
+      background: linear-gradient(135deg, var(--pink) 0%, var(--purple) 60%, var(--yellow) 120%);
+      display:flex;
+      overflow:hidden; 
+    }
+
+    /* Layout */
+    .sidebar{
+      width:320px;
+      padding:20px;
+      background: var(--glass);
+      backdrop-filter: blur(6px);
+      overflow-y:auto;
+      border-right:2px solid rgba(255,255,255,.25);
+    }
+
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 28px;
+      gap: 18px;
+
+      /* ganti ini */
+      min-height: 0;   /* WAJIB supaya scroll jalan */
+      overflow: hidden;
+    }
+
+    .book-item{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      background: rgba(255,255,255,.18);
+      border:1px solid rgba(255,255,255,.25);
+      padding:12px;
+      border-radius:14px;
+      cursor:pointer;
+      transition: transform .2s, background .2s, box-shadow .2s;
+    }
+    .book-item + .book-item{ margin-top:12px; }
+    .book-item:hover{ transform: translateY(-2px); background: rgba(255,255,255,.28); box-shadow:0 8px 16px rgba(0,0,0,.18); }
+    .cover{
+      width:56px; height:80px; border-radius:8px; object-fit:cover;
+      box-shadow:0 4px 10px rgba(0,0,0,.35); border:2px solid rgba(255,255,255,.4);
+      background: var(--peach);
+    }
+    .meta h4{
+      margin:0; font-family:"Popins", cursive; letter-spacing:.3px; font-size:18px;
+    }
+    .meta .genre{
+      margin:2px 0 0; font-size:12px; color:#f9eefe;
+    }
+
+    /* Story area */
+    .title{
+      margin:0;
+      font-family:"Poppins", cursive;
+      font-size:32px;
+      color:#fff;
+      text-shadow:0 2px 0 rgba(0,0,0,.15);
+    }
+    html, body {
+      height: 100%; /* biar flex bisa ukur tinggi */
+      margin: 0;
+    }
+
+    .container {
+      display: flex;
+      height: 100%; /* isi full layar */
+    }
+
+    .content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0; /* WAJIB */
+    }
+
+    /* Scrollbar untuk Chrome, Edge, Safari */
+    .panel::-webkit-scrollbar {
+      width: 14px;
+    }
+
+    .panel::-webkit-scrollbar-track {
+      background: rgba(255,255,255,.2);
+      border-radius: 10px;
+    }
+
+    .panel::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, #ff85c1, #ffb6c1);
+      border-radius: 10px;
+      border: 3px solid rgba(255,255,255,.4);
+    }
+
+    .panel::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(180deg, #ff61b6, #ff99cc);
+    }
+
+    /* Scrollbar untuk Firefox */
+    .panel {
+      scrollbar-width: thin;
+      scrollbar-color: #ff85c1 rgba(255,255,255,.2);
+    }
+
+    .sidebar::-webkit-scrollbar {
+      width: 14px;
+    }
+
+    .sidebar::-webkit-scrollbar-track {
+      background: rgba(255,255,255,.2);
+      border-radius: 10px;
+    }
+
+    .sidebar::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, #ff85c1, #ffb6c1);
+      border-radius: 10px;
+      border: 3px solid rgba(255,255,255,.4);
+    }
+
+    .sidebar::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(180deg, #ff61b6, #ff99cc);
+    }
+
+    /* Scrollbar untuk Firefox */
+    .sidebar {
+      scrollbar-width: thin;
+      scrollbar-color: #f849a0 rgba(255,255,255,.2);
+    }
+
+    .panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: rgba(0,0,0,.18);
+      border: 1px solid rgba(255,255,255,.25);
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: 0 12px 24px rgba(0,0,0,.18);
+
+      /* ini yang bikin panel bisa scroll */
+      overflow-y: auto; 
+      min-height: 0; /* WAJIB */
+    }
+
+    .story {
+      background: #FFF7AD;
+      padding: 20px;
+      border-radius: 12px;
+      font-size: 18px;
+      line-height: 1.75;
+      color: #333;
+      white-space: pre-line;
+
+      /* biar ikut tinggi konten */
+      flex: 1 0 auto;
+    }
+    @keyframes reveal{
+      to{ opacity:1; transform:none; }
+    }
+
+    .btn-game{
+      align-self:center;
+      margin-top:20px;
+      padding:12px 20px;
+      background: var(--pink);
+      color:#fff;
+      border:none;
+      border-radius:12px;
+      font-weight:700;
+      cursor:pointer;
+      box-shadow:0 6px 14px rgba(0,0,0,.25);
+      transition: all .2s;
+    }
+    .btn-game:hover{ background: var(--purple); transform:translateY(-2px); }
+  </style>
+</head>
+<body>
+
+<!-- Sidebar kiri: pilihan buku -->
+<aside class="sidebar" id="sidebar"></aside>
+
+  <!-- Area kanan: cerita -->
+  <main class="main">
+    <h1 class="title" id="storyTitle">Select Book</h1>
+
+    <section class="panel">
+      <div class="story" id="storyContent">…</div>
+      <button class="btn-game" id="gameBtn" style="display:none;" onclick="goToGame()">Next</button>
+    </section>
+  </main>
+
+  <script>
+    // ====== DATA CERITA ======
+    const LIBRARY = [
+      {
+        id: "story1",
+        title: "Batu dan Manusia",
+        genre: "Cerita Fiksi",
+        cover: "https://raw.githubusercontent.com/Shsndne/secret/refs/heads/main/assetstory/batu%20dan%20manusia.png",
+        content: `Di sebuah negeri tua yang jauh dari peradaban modern, berdirilah gunung-gunung kokoh yang seakan menopang langit. Tanahnya subur, hutan hijau membentang, dan sungai mengalir bagaikan nadi kehidupan. Negeri itu dinamakan Ardhapada, sebuah negeri yang dipercaya oleh penduduknya lahir dari rahim batu.
+        Orang-orang Ardhapada percaya bahwa sebelum ada manusia, sebelum ada hutan dan sungai, yang pertama hadir adalah Batu Tertua. Batu itu berada di puncak gunung tertinggi, dikelilingi kabut, dan disebut sebagai Hati Bumi. Dari Batu Tertua itulah, perlahan tanah merekah, air memancar, pohon tumbuh, lalu kehidupan bermula.
+        Legenda itu diwariskan turun-temurun. Namun seiring waktu, manusia mulai lupa. Mereka melihat batu hanya sebagai benda mati: keras, dingin, tidak bernyawa. Batu dipahat menjadi patung, digilas menjadi kerikil, atau ditumpuk menjadi pondasi. Tidak ada lagi rasa hormat. Batu hanya dianggap alat.
+
+        Di desa kecil di kaki Gunung Ardhapada, hiduplah seorang pemuda bernama Sakala. Ia anak seorang penambang batu. Sehari-hari, ayahnya memecah batu dari tebing lalu menjualnya ke kota untuk bahan bangunan. Sakala tumbuh di antara bunyi palu yang menghantam batu, di antara debu dan serpihan keras yang berhamburan.
+        Sejak kecil, Sakala sering mendengar ayahnya berkata:
+        “Batu itu sumber rezeki kita. Tanpa batu, kita tak bisa makan.”
+        Namun dalam hati, Sakala menyimpan pertanyaan:
+        “Kalau batu benar sumber hidup, mengapa kita memukulnya, menghancurkannya, bahkan merendahkannya?”.
+
+        Rasa penasaran itu terus membesar. Hingga suatu malam, ketika bulan purnama menggantung di langit, Sakala mendengar suara aneh. Ia sedang beristirahat di dekat tumpukan batu di halaman rumah ketika suara berat, dalam, dan bergema berkata:
+        “Manusia muda… mengapa kalian memukul kami tanpa bertanya siapa kami?”
+        Sakala terperanjat. Ia menoleh ke sekeliling. Tak ada siapa-siapa. Suara itu jelas berasal dari batu besar yang ada di sampingnya. Batu yang setiap hari ia injak tanpa rasa.
+        Dengan suara bergetar, Sakala bertanya, “Siapa… siapa kau?”
+        “Aku hanyalah batu. Tapi lebih tua dari semua ayahmu, lebih lama dari semua leluhurmu. Aku melihat lahirnya negeri ini, aku menyaksikan ribuan generasi berlalu. Namun manusia hanya mengenalku sebagai benda mati,” jawab suara itu.
+
+        Sejak malam itu, Sakala sering berbicara dengan batu. Ia bertanya tentang masa lalu, tentang dunia sebelum manusia. Batu bercerita dengan suara bergema, seperti gaung dari perut bumi.
+        “Kami ada sebelum pohon, sebelum sungai. Kami diam, namun menyimpan waktu. Setiap retakan di tubuh kami adalah catatan. Setiap pecahan adalah ingatan. Tapi manusia lebih suka menghancurkan ingatan itu daripada membacanya.”
+        Sakala terpesona. Ia merasa kecil, sangat kecil, di hadapan usia batu yang abadi. Tapi bersamaan dengan itu, ia juga merasakan damai. Batu mengajarinya kesabaran, keheningan, dan arti keteguhan.",
+
+        Namun tidak semua orang sebijak Sakala. Di kota besar, para bangsawan dan saudagar mendengar kabar bahwa di Gunung Ardhapada terdapat batu berkilau yang jika dipahat akan memancarkan cahaya seperti bintang. Batu itu dipercaya memberi kekuatan bagi pemiliknya.
+        Seorang penguasa kota bernama Adhipa memerintahkan prajuritnya untuk naik ke gunung dan mengambil batu-batu itu. Ia berkata:
+        “Jika batu sungguh menyimpan kekuatan, maka kekuatan itu harus berada di tanganku. Aku akan membangun istana dari batu bercahaya, agar semua manusia tunduk pada kemegahanku.”
+
+        Maka ratusan orang dikerahkan, menebang pohon, merobohkan tebing, menghancurkan batu tanpa ampun. Suara palu dan linggis menggema di gunung. Burung-burung pergi, sungai keruh, tanah longsor.
+        Sakala melihat semua itu dengan hati gelisah. Ia kembali berbicara dengan batu sahabatnya. Batu itu berkata lirih, “Mereka sedang membangunkan murka bumi. Batu bukan untuk disombongkan, bukan untuk dipaksa. Jika mereka terus merusak, bumi akan merespons.”
+        Namun manusia tak peduli. Semakin banyak batu bercahaya ditemukan, semakin rakus pula tangan-tangan yang menggalinya.",
+
+        Suatu malam, langit bergemuruh. Gunung Ardhapada bergetar. Batu-batu retak, tebing runtuh. Desa-desa di bawahnya terguncang. Orang-orang panik, berlari ke sana kemari.
+        Dari puncak gunung, terdengar suara besar bergema seperti ribuan guntur bersatu:
+        “Wahai manusia, mengapa kalian lupa? Kami diam bukan berarti kami lemah. Kami keras bukan berarti kami tak punya hati. Kalian menindas, kalian merusak, kini kalian akan belajar!”
+        Tiba-tiba, longsor besar turun dari gunung, menimbun jalan, menghancurkan rumah-rumah bangsawan yang dulu memerintahkan penambangan. Sungai berubah arah, menutup jalur perdagangan kota. Batu seakan hidup, bergerak, menutup istana Adhipa dengan dinding tebal tak tergoyahkan.
+        Orang-orang berteriak, “Batu hidup! Batu marah!” Mereka ketakutan, berdoa, memohon ampun.
+        Namun Sakala berdiri di depan longsoran batu itu. Ia meletakkan tangannya di salah satu batu besar dan berbisik:
+        “Aku mendengar kalian. Aku tahu kalian bukan musuh. Ajarilah kami, agar manusia tak lagi buta.”
+        Batu itu bergetar lembut. Suara berat kembali terdengar:
+        “Hanya dengan kerendahan hati manusia bisa hidup berdampingan dengan kami. Jika keserakahan kembali berkuasa, bumi akan mengulang amarahnya.”
+
+        Sejak kejadian itu, Sakala merasa dirinya diberi amanat. Ia mulai berjalan dari desa ke desa, dari kota ke kota, menceritakan bahwa batu bukan benda mati. Batu adalah penjaga waktu, saksi kehidupan, dan bagian dari bumi yang harus dihormati.
+        Banyak orang mencibirnya. “Mana mungkin batu bicara? Kau sudah gila!” kata mereka.
+        Tapi ada juga yang mulai mendengar, terutama mereka yang kehilangan rumah karena longsor.
+        Sakala mengajarkan anak-anak desa untuk meraba batu, merasakan dinginnya, mendengarkan keheningan yang dikandungnya. Ia berkata:
+        “Batu mengajarkan kesabaran. Batu mengajarkan keteguhan. Jika kau belajar dari batu, kau akan tahu bagaimana hidup selaras dengan bumi.”
+        Lama-kelamaan, kabar tentang Sakala menyebar. Orang-orang menjulukinya Penjaga Batu.
+        Namun tidak semua senang dengan ajaran itu. Adhipa, penguasa serakah yang istananya terkubur batu, marah besar. Ia memerintahkan prajuritnya menangkap Sakala.
+
+        “Bocah itu menipu rakyat dengan dongeng konyol. Batu hanyalah alat. Aku akan membuktikannya!” seru Adhipa.
+        Sakala digiring ke hadapan Adhipa. Sang penguasa menantang, “Jika batu benar hidup, suruh batu menyingkir dari istanaku yang terkubur! Jika tidak, kau hanya pembohong.”
+        Sakala menunduk, lalu berjalan ke longsoran batu yang menutup istana. Ia menempelkan telapak tangannya. Ia berbisik pelan, “Sahabat, tunjukkan padanya kebenaran. Bukan untuk menyombongkan diri, tapi agar manusia tahu siapa yang berkuasa.”
+        Tiba-tiba, bumi bergetar. Batu-batu yang menutup istana bergeser pelan, membuka jalan. Semua orang terperangah. Adhipa gemetar, wajahnya pucat.
+        Sakala menoleh padanya dan berkata:
+        “Batu bukan alatmu, bukan pula budakmu. Batu memilih untuk membuka jalan karena aku meminta dengan rendah hati. Jika kau masih angkuh, batu akan kembali menutupmu.”
+        Adhipa jatuh berlutut. Untuk pertama kalinya, penguasa serakah itu menangis. Ia sadar bahwa kekuatan yang ia kejar hanyalah ilusi. Batu yang ia anggap tak bernyawa ternyata memiliki kehendak lebih besar dari dirinya.
+
+        Sejak hari itu, Ardhapada berubah. Penambangan batu dihentikan. Gunung kembali hijau. Sungai kembali jernih. Orang-orang membangun rumah dengan bijak, mengambil batu secukupnya tanpa merusak.
+        Sakala dihormati bukan sebagai raja, melainkan sebagai penjaga. Ia terus mengajarkan generasi baru untuk mendengar suara batu.
+        Batu pun kembali diam, tetapi manusia tahu: dalam diam itu tersimpan kehidupan, kesabaran, dan kekuatan yang tak tertandingi.
+        Legenda ini diwariskan turun-temurun. Orang-orang Ardhapada berkata kepada anak-anak mereka:
+        “Jika kau berjalan di gunung, hormatilah batu. Jika kau duduk di tepi sungai, hargailah batu. Karena batu bukan sekadar benda mati. Batu adalah bagian dari kita. Batu adalah guru yang abadi.”
+
+        Pesan Moral
+        Dari dongeng ini, kita belajar bahwa kekuatan bukan untuk disombongkan, melainkan untuk dijaga. Batu yang keras mengajarkan manusia untuk teguh, tapi juga untuk rendah hati. Manusia yang serakah akan hancur oleh alam, tapi manusia yang bijak akan hidup berdampingan dengannya.`
+      },
+
+      {
+        id: "story2",
+        title: "Si Tikus Pencuri Kebun",
+        genre: "Cerita Misteri",
+        cover: "https://raw.githubusercontent.com/Shsndne/secret/refs/heads/main/assetstory/cerita1.png",
+        content: `Di sebuah desa kecil yang damai, hiduplah seekor kelinci bernama Luma. Ia dikenal sebagai kelinci yang ceria dan rajin bekerja. Luma sangat suka berkebun. Setiap pagi, ia pergi ke perkebunannya yang luas dengan membawa keranjang rotan di punggungnya.",
+        Di perkebunan itu tumbuh berbagai macam tanaman: wortel segar berwarna oranye, stroberi merah yang manis, jagung kuning yang tinggi menjulang, hingga labu besar yang bulat. Ada juga bunga-bunga kecil yang tumbuh di pinggir kebun, membuat tempat itu selalu indah dipandang. Burung-burung berkicau, kupu-kupu beterbangan, dan udara pagi terasa sejuk.",
+        Warga desa sangat senang dengan hasil kebun Luma. Setiap minggu mereka datang untuk membeli sayuran dan buah-buahan segar. Dari hasil panennya, Luma juga sering membuat kue manis untuk dibagikan kepada tetangga. Kehidupan di desa itu pun terasa hangat dan penuh kebahagiaan.
+        
+        Namun, kebahagiaan itu tidak bertahan lama. Beberapa hari terakhir, muncul masalah besar. Tikus-tikus nakal datang dan mulai merusak perkebunan. Mereka menggali lubang di tanah, muncul tiba-tiba, lalu menggigit wortel, mencuri stroberi, bahkan menyeret jagung ke dalam sarang mereka.
+        “Oh tidak...” seru Luma ketika melihat kebunnya. “Kalau begini terus, seluruh panen bisa hilang! Bagaimana aku bisa membuat sup untuk teman-temanku?”",
+        Hari demi hari, tikus-tikus itu semakin berani. Mereka muncul di pagi hari, sore hari, bahkan kadang saat malam tiba. Tanaman Luma semakin berkurang, dan keranjang panennya tidak lagi penuh seperti biasanya.
+        Luma mulai gelisah. “Aku tidak bisa membiarkan ini terus terjadi. Aku harus melindungi kebunku” ucapnya dengan wajah serius.
+        
+        Malam itu, setelah membereskan keranjangnya, Luma duduk di gubuk kecil di tepi perkebunan. Ia berpikir keras mencari solusi. Tiba-tiba matanya tertuju pada sebuah palu kayu kecil yang tergantung di dinding. Itu adalah palu tua yang dulu digunakan ayahnya untuk memecah kacang.
+        Luma menatap palu itu lekat-lekat, lalu tersenyum. “Ya! Dengan palu ini, aku bisa menjaga kebunku dari tikus-tikus nakal!” katanya penuh semangat.
+        
+        Keesokan paginya, Luma sudah bersiap lebih awal. Ia berdiri tegak di tengah kebunnya, palu kayu di tangan, matanya awas menatap lubang-lubang di tanah. Angin bertiup pelan, daun-daun bergetar, dan suasana terasa tegang.
+        Tiba-tiba... “plop!” Seekor tikus kecil muncul dari sebuah lubang, membawa wortel di tangannya. Luma segera melompat mendekat. Beberapa detik kemudian, tikus lain muncul dari lubang yang berbeda. Semakin lama, semakin banyak tikus bermunculan, berlari cepat di antara sayuran.
+        Inilah waktunya permainan!
+        Kamu harus membantu Luma menangkap tikus-tikus yang muncul dari berbagai lubang. Semakin banyak tikus yang tertangkap, semakin sedikit hasil panen yang hilang.`
+      },
+
+      {
+        id: "story3",
+        title: "Petualangan Arlo di Negeri Ajaib",
+        genre: "Cerita Romantis",
+        cover: "https://raw.githubusercontent.com/Shsndne/secret/refs/heads/main/assetstory/cerita2.png",
+        content: `Di kota ajaib Cardonia, rumah-rumah berbentuk jamur dan jalanan pelangi membuat siapa pun tersenyum saat melewatinya. Di pusat kota, terdapat perpustakaan magis yang dipenuhi kartu-kartu ajaib. Setiap kartu menyimpan gambar makhluk lucu, bintang berkilau, atau alat sihir imut yang bersinar lembut.
+        Seorang pemuda kecil bernama Arlo diberi tugas spesial: menemukan pasangan kartu yang sama agar pintu rahasia perpustakaan terbuka. Pintu itu konon akan menampilkan dunia penuh cahaya dan teman-teman magis yang menunggu untuk bermain.
+        Setiap hari, Arlo masuk ke perpustakaan yang harum dengan aroma buku dan permen kapas. Di meja panjang, ribuan kartu berwarna-warni terhampar. Beberapa kartu terlihat saat disentuh, sementara yang lain menunggu untuk ditemukan. Arlo harus mengingat setiap posisi dengan teliti.
+        
+        Hari pertama, Arlo mencoba beberapa kartu. Ia menemukan pasangan kelinci bersayap yang menggemaskan, dan sepasang botol sihir mini yang meneteskan cahaya pelangi. Ia tersenyum, matanya berbinar karena kegembiraan.
+        Hari-hari berikutnya, Arlo semakin terampil. Ia mulai mengingat pola dan warna setiap kartu. Tapi beberapa kartu menipu matanya: terlihat mirip, tapi bukan pasangan yang sama. Arlo tertawa geli setiap kali salah mencocokkan dan mendengar suara ‘pop’ lucu dari kartu.
+        Suatu sore, saat cahaya matahari menembus jendela kaca berwarna, Arlo duduk sambil menata kartu. Ia membuat strategi: kelompokkan makhluk lucu di satu sisi, bintang berkilau di sisi lain, dan alat sihir mini di tengah. Cara ini membuatnya lebih cepat menemukan pasangan.
+        Tantangan terbesar muncul saat kartu-kartu tersembunyi di pojok meja panjang. Arlo harus mengingat dengan seksama, dan setiap gerakan terasa seperti permainan menebak dengan teman-teman peri yang mengintip dari rak buku.
+      
+        Malamnya, lampu peri di perpustakaan berkedip lembut, menciptakan bayangan berwarna. Arlo membuka satu kartu terakhir yang sulit diingat. Ia tersenyum, menarik napas dalam, dan menebak dengan hati-hati. Pasangan itu cocok! Cahaya lembut memancar, dan pintu rahasia mulai terbuka perlahan.
+        Arlo melompat kegirangan. Dari balik pintu, dunia penuh warna, makhluk lucu, dan gulungan buku ajaib menantinya. Ia menari kecil karena bahagia, dikelilingi teman-teman peri yang menatap dengan senyum manis.
+        Inilah waktunya permainan!",
+        Bantu Arlo menemukan semua pasangan kartu yang sama. Semakin cepat dan tepat menemukan pasangan, semakin cepat pintu rahasia perpustakaan terbuka dan semakin banyak teman magis yang muncul untuk bermain bersama.`
+      },
+
+      {
+        id: "story4",
+        title: "Jus Segar di Pagi Hari",
+        genre: "Cerita Fiksi",
+        cover: "https://raw.githubusercontent.com/Shsndne/secret/refs/heads/main/assetstory/Warna%20Warni%20Ilustratif%20Buku%20Cerita%20Anak%20Cover.png",
+        content: `Musim hujan baru saja lewat, dan jalanan kota masih basah dari hujan semalam. Di sudut jalan, Rani, seorang penjual jus, menyiapkan gerobak kecilnya. Namun, hari ini sepi… pelanggan jarang muncul karena cuaca mendung dan dingin. Rani menghela napas.
+        “Huh… sepertinya hari ini tidak akan laku sama sekali,” katanya sambil menatap buah-buah segar di gerobaknya.
+        
+        Tiba-tiba, langit mulai cerah, dan matahari bersinar terik! Panasnya membuat semua orang haus, dan tak lama kemudian, barisan panjang pelanggan datang ke gerobak jus Rani. Jus segar menjadi rebutan! Rani tersenyum lebar, tapi buah-buah di meja mulai menumpuk terlalu cepat untuk diolah satu per satu. “Aku butuh bantuan! Cepat, bantu aku membuat jus!”
+        Di sinilah pemain masuk: buah-buah segar melayang di udara, siap dipotong untuk dijadikan jus. Tugasmu adalah “slice” buah-buah itu dengan menggeser jari atau mouse melewati mereka. Semakin banyak buah yang berhasil dipotong, semakin banyak jus yang bisa disajikan untuk pelanggan yang haus.
+        
+        Semua buah berhasil dipotong dengan cepat dan sempurna! Jus segar mengalir deras dari gerobak kecil Rani, memenuhi gelas demi gelas untuk pelanggan yang haus. Barisan panjang perlahan menghilang, berganti dengan wajah-wajah puas yang tersenyum bahagia.
+        “Terima kasih banyak!” seru pelanggan.
+        “Wah, jusmu luar biasa segar!” tambah yang lain.
+
+        Rani terharu. Dagangannya laris manis, dan ia merasa usahanya tidak sia-sia. Ia menatap ke arahmu dan tersenyum tulus.
+        “Kalau bukan karena bantuanmu, aku tak akan sanggup melayani semuanya. Terima kasih sudah membantuku!” katanya penuh syukur.
+        Hari itu, gerobak jus Rani menjadi terkenal. Orang-orang mulai sering datang, bukan hanya karena jusnya segar, tapi juga karena ada kerja sama dan semangat yang membuat suasana hangat. Rani pun pulang dengan hati gembira, membawa harapan baru untuk hari-hari berikutnya.`
+      },
+
+      {
+        id: "story5",
+        title: "Kio Peramu Kecil",
+        genre: "Cerita Misteri",
+        cover: "https://raw.githubusercontent.com/Shsndne/secret/refs/heads/main/assetstory/Cokelat%20Biru%20Ilustrasi%20Cerita%20Sampul%20Buku.png",
+        content: `Di sebuah kota kecil bernama Chemiville, berdiri laboratorium ajaib tempat para murid belajar menggabungkan unsur menjadi senyawa. Laboratorium itu dipenuhi rak tinggi dengan kartu-kartu unsur yang melayang seperti kupu-kupu bercahaya.
+        Hari itu, seorang murid bernama Kio memasuki laboratorium untuk pertama kalinya. Matanya berbinar penuh rasa ingin tahu. Ia melihat kartu unsur Air, Api, Tanah, dan Udara yang tersenyum lucu seolah siap untuk dimainkan.
+        
+        Seorang profesor ramah bernama Prof. Lumina menyambut Kio. Ia menyerahkan sebuah Buku Senyawa kosong. 'Tugasmu adalah mengisi buku ini dengan sebanyak mungkin senyawa. Gabungkan kartu unsur dengan tepat, maka halaman buku akan bersinar. Tapi hati-hati, kombinasi yang salah akan memunculkan Awan Gelap.
+        Kio pun mulai mencoba. Saat Air digabungkan dengan Api, muncullah kartu baru: Uap Hangat, yang melayang sambil berkata 'poff!'. Halaman pertama buku pun bersinar lembut.
+    
+        Hari-hari berikutnya, Kio mengumpulkan unsur baru dari berbagai tempat: Cahaya dari taman bunga, Es dari gua beku, dan Logam dari sungai berkilau. Setiap kartu unsur memiliki kepribadian unik—ada yang suka bercanda, ada yang suka bernyanyi.
+        Namun, beberapa percobaan salah menimbulkan Awan Gelap yang menutupi sebagian buku. 'Jangan takut gagal,' kata Prof. Lumina. 'Setiap alkemis hebat belajar dari percobaannya.
+        Semakin banyak kombinasi yang berhasil, semakin indah hasilnya: Tanah dan Air menjadi Tanaman Kecil, Tanaman dan Cahaya menjadi Bunga Pelangi, Logam dan Api menghasilkan Pedang Mini Berkilau. Buku Senyawa Kio makin penuh warna dan berkilau.
+        
+        Tibalah malam purnama, tantangan terakhir Kio. Semua murid berkumpul di laboratorium untuk melihat hasil karyanya. Kio harus menempelkan kartu terakhir dengan hati-hati.
+        Halaman buku bergetar, cahaya hangat memenuhi ruangan, dan semua unsur menari gembira. Kini, hasil akhirnya bergantung pada seberapa banyak senyawa yang berhasil kamu buat bersama Kio.
+        Inilah waktunya permainan!
+        Bantu Kio menggabungkan kartu unsur menjadi senyawa ajaib. Semakin banyak senyawa yang berhasil dibuat, semakin terang cahaya laboratorium dan semakin indah halaman Buku Senyawa Ajaib.`
+      },
+
+      {
+        id: "story6",
+        title: "Serangan Virus di Kota Robot",
+        genre: "Cerita Non Fiksi",
+        cover: "https://raw.githubusercontent.com/Shsndne/secret/refs/heads/main/assetstory/Book%20Cover%20Rahasia%20Lorong%20Tua%20Illustratif%20Biru%20Putih.png",
+        content: `Di Kota Robot, para robot sibuk mengembangkan inovasi baru untuk membuat kota lebih canggih. Robot kecil bekerja di laboratorium, mencampur bahan-bahan eksperimen yang rumit.
+        Tiba-tiba, botol eksperimen penting pecah, dan bahan-bahan itu bercampur menjadi sesuatu yang tidak terduga… sebuah virus digital liar menyebar ke seluruh kota! Lampu berkedip aneh, mesin-mesin berhenti sebentar, dan robot lain mulai bertingkah kacau.
+        Sang robot insinyur utama, Riko, sadar ia harus bertindak cepat.
+        “Kita harus membersihkan virus ini sebelum kota hancur!”
+        
+        Di sinilah pemain masuk: virus-virus liar terbang ke segala arah di layar. Tugasmu adalah “slice” virus-virus itu dengan menggeser jari atau mouse melewati mereka. Semakin banyak virus yang hilang, semakin aman kota.
+        Virus hilang semua! Kota Robot kembali normal, cahaya lampu stabil, dan mesin-mesin berfungsi dengan baik. Inovasi baru berhasil diluncurkan dengan sukses. Seluruh robot bersorak gembira, menyambut hari baru dengan penuh semangat.
+        
+        Riko menatap ke arahmu dan tersenyum bangga.
+        “Kerja bagus! Kamu telah menyelamatkan seluruh kota. Mulai hari ini, kau adalah bagian dari para penjaga Kota Robot!”
+        Sorak sorai menggema di seluruh kota. Dari robot kecil hingga robot raksasa, semua bertepuk tangan. Riko diangkat sebagai Pahlawan Kota Robot, dan namamu dikenang sebagai sahabat yang ikut berjasa dalam menyelamatkan mereka dari kehancuran.`
+      },
+
+      {
+        id: "story7",
+        title: "Kancil dan Ular",
+        genre: "Cerita Non Fiksi",
+        cover: "https://raw.githubusercontent.com/Shsndne/secret/refs/heads/main/assetstory/kancil%20dan%20ular.png",
+        content: `Di sebuah hutan tropis yang rimbun, di mana pepohonan menjulang tinggi, burung-burung berkicau, dan matahari menembus dedaunan dalam cahaya keemasan, hiduplah seekor kancil kecil yang terkenal cerdik. Namanya adalah Si Kancil, tokoh yang sudah dikenal oleh banyak hewan lain di hutan itu. Semua hewan tahu bahwa meski tubuhnya kecil, kancil memiliki akal yang tajam, lidah yang pandai berbicara, dan keberanian yang sering kali menyaingi binatang yang jauh lebih besar darinya.
+        Namun di hutan yang sama, bersemayam pula seekor ular besar. Ular ini sangat ditakuti. Tubuhnya panjang, sisiknya berkilau kehijauan, dan matanya tajam memancarkan cahaya dingin. Ia hidup di tepi sungai besar, bersembunyi di antara batu dan akar pepohonan. Semua hewan menyebutnya Ular Raksasa, meskipun ukuran tubuhnya sebenarnya hanya dua kali lipat ular biasa. Tapi keberanian dan kehausan akan kekuasaan membuatnya lebih menakutkan daripada sekadar ukuran tubuhnya.
+      
+        Ular Raksasa memiliki sifat licik dan penuh dendam. Ia selalu merasa dirinya pantas menguasai hutan. “Mengapa singa yang jadi raja hutan?” gumamnya suatu kali. “Singa hanya berkuasa karena taring dan cakarnya. Padahal aku bisa membelit, mencekik, dan membuat siapa pun tunduk padaku. Cepat atau lambat, hutan ini akan tahu siapa penguasanya yang sejati.”
+
+        Suatu pagi yang cerah, Kancil sedang berjalan-jalan di tepi sungai. Ia mencari buah-buahan yang jatuh dari pohon besar. Kancil selalu suka menjelajah, apalagi di dekat sungai di mana banyak ikan melompat dan bunga-bunga liar bermekaran.
+        Namun saat itu, ia melihat sesuatu yang aneh. Seekor katak melompat terburu-buru melewatinya, lalu seekor tupai juga berlari sekuat tenaga, wajahnya ketakutan. Burung-burung beterbangan panik.
+        Kancil menghentikan langkahnya. “Ada apa ini? Mengapa semua hewan tampak takut?” tanyanya.
+        Seekor tupai menjawab sambil terengah, “Ular! Ular Raksasa itu muncul lagi! Ia mengancam siapa saja yang minum di sungai ini. Katanya sungai ini sekarang miliknya!”
+        Kancil terkejut. “Sungai? Miliknya? Bukankah sungai milik semua makhluk?”
+        Tupai hanya menggeleng lalu berlari pergi.
+
+        Tak lama kemudian, Ular Raksasa itu muncul dari air. Tubuhnya mengkilat, sisiknya memantulkan cahaya matahari. Ia mendesis panjang, lidahnya menjulur.
+        “Siapa berani mendekati sungai ini akan jadi santapanku,” katanya dengan suara menggelegar. “Aku lelah berbagi. Mulai sekarang, air ini adalah milikku. Barang siapa haus, harus minta izin padaku, dan membawa persembahan!”
+        Kancil mengerutkan alisnya. Ia sadar, jika dibiarkan, Ular Raksasa akan benar-benar menindas semua penghuni hutan. Ia maju beberapa langkah, menatap ular itu tanpa gentar.
+        “Wahai Ular,” kata Kancil, “kau tidak bisa menguasai sungai ini. Air adalah sumber kehidupan, dan tidak ada satu pun makhluk yang berhak menguasainya sendirian.”
+        Ular tertawa terbahak, suara tawanya seperti ranting kering patah. “Kau? Si Kancil kecil yang suka menipu itu? Kau berani menentangku? Kau hanya sebutir debu di hadapanku!”
+        Kancil tidak mundur. “Aku memang kecil, tapi ingatlah, akal bisa mengalahkan kekuatan. Jika kau serakah, hutan ini akan melawanmu.”
+        Ular mendesis marah. “Kita lihat nanti, Kancil. Kau akan jadi santapanku berikutnya!”
+
+        Kancil tahu ia tidak bisa melawan ular dengan kekuatan. Maka ia memutar otak. Ia melihat sekeliling sungai, lalu menemukan ide.
+        “Baiklah, Ular,” kata Kancil, “jika kau benar-benar merasa hebat, tunjukkan seberapa panjang tubuhmu. Aku dengar kau mengaku bisa melingkari sungai ini. Benarkah?”
+        Ular mengangkat kepalanya, matanya menyala penuh kesombongan. “Tentu saja! Aku jauh lebih panjang dari yang kau bayangkan.”
+        “Kalau begitu, buktikan,” tantang Kancil. “Bentangkan tubuhmu dari tepi sungai ini hingga ke batu besar di sana. Jika kau benar-benar panjang, aku akan mengakui kau penguasa sungai.”
+        Ular setuju. Ia membentangkan tubuhnya sejauh mungkin, dari tepi sungai hingga ke batu besar di seberang. Tubuhnya memang panjang, tapi tak cukup sampai menutupi seluruh jarak.
+        Kancil tertawa kecil. “Lihatlah! Ternyata kau tidak sepanjang yang kau katakan. Kau hanya pembual!”
+        Ular marah besar. Ia merasa dipermalukan. Namun sebelum ia bisa menyerang, Kancil sudah kabur ke dalam hutan.
+
+        Hari-hari berikutnya, Ular Raksasa semakin marah. Ia merasa harga dirinya diinjak-injak oleh Kancil. Ia bersumpah akan membalas.
+        “Jika aku tidak bisa menang dengan panjang tubuhku, aku akan menang dengan tipu daya,” bisiknya.
+        Maka ular mulai menyusun rencana. Ia bersembunyi di semak-semak, mengintai jalur yang biasa dilalui Kancil. Ia menunggu saat yang tepat untuk menyerang.
+        Kancil, meski cerdik, juga tahu bahwa Ular pasti akan mendendam. Ia selalu berhati-hati, tidak pernah lewat jalur yang sama dua kali. Namun pada suatu sore, ketika ia sedang asyik mencari buah, ia hampir saja terjebak dalam lilitan ular.
+        Ular muncul tiba-tiba, melingkar cepat. Tapi Kancil lebih lincah. Ia melompat ke pohon kecil, lalu berkata sambil mengejek, “Ah, Ular, kau terlalu lamban. Aku sudah bilang, kekuatan saja tidak cukup melawanku!”
+        Ular mendesis. “Jangan terlalu percaya diri, Kancil. Aku akan sabar menunggumu. Ingat, aku punya waktu sepanjang hidupku, sementara kau hanya seekor hewan kecil yang suka berlari. Cepat atau lambat, aku akan menangkapmu.”
+
+        Ular mulai menebar ketakutan. Ia menakuti kijang, mengintimidasi burung-burung, bahkan mengusir gajah yang ingin minum di sungai. Semua hewan gelisah.
+        Mereka kemudian berkumpul di padang rumput untuk membicarakan masalah ini. Gajah, harimau, rusa, monyet, semua hadir. Kancil juga ikut.
+        Gajah berkata, “Kita harus mengusir Ular. Ia membuat semua hewan menderita. Tapi bagaimana? Tubuhnya licin, kuat, dan beracun.”
+        Harimau menambahkan, “Aku bisa menerkamnya, tapi lilitan tubuhnya bisa menghancurkan tulangku. Kita perlu cara lain.”
+        Semua mata akhirnya tertuju pada Kancil. Mereka tahu hanya dia yang bisa menandingi kelicikan Ular.
+        Kancil mengangguk. “Baiklah, aku akan mencoba. Tapi kalian semua harus bekerja sama denganku. Melawan ular bukan hanya tugas satu hewan, ini tugas kita bersama.”
+
+        Kancil menyusun rencana cerdik. Ia tahu ular sangat serakah dan sombong. Maka ia akan menggunakan kelemahan itu untuk menjebaknya.
+        Keesokan harinya, Kancil mendekati ular di tepi sungai. Ia pura-pura bersikap ramah. “Wahai Ular, aku sudah memikirkan lagi perkataanmu. Mungkin memang benar, kau lebih kuat dari siapa pun. Tapi, apakah kau juga yang terkuat di seluruh hutan?”
+        Ular menegakkan kepalanya dengan bangga. “Tentu saja! Tidak ada yang bisa menandingi kekuatanku.”
+        Kancil berkata, “Kalau begitu, ayo buktikan. Ada sebuah gua besar di tengah hutan, di dalamnya ada harta karun kuno. Konon, hanya makhluk terkuat yang bisa masuk dan menguasainya. Jika kau berhasil masuk, semua hewan akan mengakui kehebatanmu.”
+        Ular tergoda. “Harta karun? Aku akan menunjukkannya pada kalian semua.
+        Maka Kancil memimpin ular ke gua besar. Namun sebenarnya, itu bukan gua harta karun. Itu adalah gua sempit yang dalamnya seperti jebakan.
+        “Masuklah,” kata Kancil. “Tunjukkan kekuatanmu.”
+        Ular masuk dengan penuh percaya diri. Namun begitu ia melilit ke dalam, ia tak bisa bergerak bebas. Tubuh panjangnya terjebak di celah-celah batu gua.
+        Kancil segera berteriak pada hewan-hewan lain. “Cepat! Tutup pintu gua dengan batu besar!”
+        Gajah dan kerbau bekerja sama mendorong batu-batu besar hingga menutup mulut gua. Ular terjebak di dalam. Ia mendesis keras, suaranya menggema, namun tak bisa keluar.
+
+        Sejak hari itu, hutan kembali damai. Hewan-hewan bisa minum di sungai tanpa takut. Burung bernyanyi lagi, kijang berlari bebas, monyet bergelantungan dengan riang. Semua berterima kasih pada Kancil.
+        Namun Kancil berkata, “Kemenangan ini bukan hanya karena aku. Kita semua bekerja sama. Ingatlah, kekuatan bisa mengalahkan satu makhluk, tapi kerja sama bisa menyelamatkan seluruh hutan.”
+        Di dalam gua, Ular Raksasa masih mendesis. Ia menyesali kesombongannya. Ia menyadari bahwa serakah dan angkuh hanya membawa kehancuran.
+
+        Pesan Moral
+        Dari kisah ini, kita belajar bahwa kecerdikan bisa mengalahkan kekuatan, dan bahwa kerja sama lebih berharga daripada kesombongan. Keserakahan hanya membawa penderitaan, sementara kebijaksanaan dan kerendahan hati membawa kedamaian.`
+      },
+
+      {
+        id: "story8",
+        title: "Ruang Hampa",
+        genre: "Cerita Fiksi",
+        cover: "https://raw.githubusercontent.com/Shsndne/secret/refs/heads/main/assetstory/Biru%20Gelap%20Ilustrasi%20Novel%20Cover%20Page.png",
+        content: `Di sebuah kota yang tak pernah benar-benar tidur, di mana deru mesin kendaraan bergema siang dan malam, di sanalah seorang pemuda bernama Dira hidup dalam rutinitas yang kaku. Apartemennya kecil, hanya berisi satu ranjang, satu meja, dan satu kursi. Tidak ada tanaman, tidak ada hiasan dinding, hanya putih pucat cat tembok yang semakin lama membuatnya merasa seperti tinggal di dalam kotak kosong. Setiap kali ia membuka pintu, yang menyambut hanyalah keheningan. Tak ada suara keluarga, tak ada tawa, bahkan tak ada langkah kaki lain selain miliknya. Ia terbiasa dengan kesepian itu, tetapi lama-kelamaan kesepian berubah menjadi sesuatu yang lebih pekat: hampa.
+        
+        Banyak orang mengira Dira baik-baik saja. Ia bekerja di kantor teknologi yang cukup prestisius. Rekan-rekannya menganggapnya pintar, teliti, dan dapat diandalkan. Namun, begitu jam kerja usai dan semua orang pulang untuk berkumpul dengan keluarga atau sahabat, Dira pulang ke apartemennya yang kosong. Ia makan malam sendirian, menatap layar televisi tanpa benar-benar peduli apa yang diputar, lalu tidur tanpa ada yang mengucapkan selamat malam. Dalam pikirannya, pertanyaan yang sama terus bergema: “Apakah hidup hanya seperti ini? Apa gunanya semua ini?”
+
+        Pada suatu malam, ketika hujan turun dengan deras, Dira berdiri di balkon kecil apartemennya. Lampu-lampu jalan berpendar redup di balik tirai air. Ia menatap langit, mencoba mencari bintang, namun yang ada hanya gelap. Dalam kesunyian itu, ia tiba-tiba mendengar suara. Bukan suara manusia, bukan pula gema pikirannya sendiri. Suara itu tenang, dalam, seakan datang dari ruang yang tak berujung.
+
+        "Kau memanggilku, meski kau tak menyadarinya."
+        Dira terperanjat. Ia menoleh ke sekeliling, tak ada siapa pun. Hanya hujan yang jatuh.
+        "Siapa kau?" tanyanya dalam hati, namun suara itu menjawab seolah mendengar langsung.
+        "Aku adalah Hampa. Aku datang setiap kali kau merasa kosong, setiap kali kau menatap ruang tanpa makna. Aku selalu ada, tapi malam ini, kau akhirnya menyadari kehadiranku."
+        Sejenak Dira membeku. Ia menatap kegelapan malam, mencoba memahami apa yang baru saja ia alami. Apakah ia berhalusinasi? Atau terlalu lelah? Namun suara itu begitu nyata, begitu jelas, seakan berasal dari dasar hatinya sendiri.
+
+        Hari-hari berikutnya, suara itu tidak hilang. Ia muncul dalam sunyi, menyelinap di antara detak jam, atau bahkan di sela langkah kaki Dira di lorong kantor. “Kau tahu, Dira,” suara itu berbisik, “hidupmu kosong karena kau tidak tahu cara mengisinya.”
+        Awalnya Dira takut. Ia merasa ada sesuatu yang salah dalam dirinya. Namun perlahan, ia mulai menerima bahwa Hampa adalah bagian dari hidupnya. Mereka bahkan mulai bercakap. Dira bercerita tentang rasa bosannya, tentang mimpinya yang pupus, tentang harapan yang ia kubur sejak lama. Hampa mendengarkan, lalu menjawab dengan kalimat-kalimat sederhana, tapi menusuk.
+        "Tanpa kosong, kau tak akan pernah mengerti arti penuh. Tanpa sepi, kau tak akan pernah menghargai kebersamaan. Aku bukan musuhmu, Dira. Aku adalah ruang yang menunggu untuk kau isi."
+
+        Suatu malam, Hampa menawarinya perjalanan. Bukan perjalanan dengan langkah kaki, melainkan perjalanan ke dalam ruang batin dan semesta. Seketika dinding apartemen lenyap, dan Dira merasa tubuhnya melayang di angkasa. Ia melihat hamparan bintang, nebula berwarna-warni, dan galaksi yang berputar megah. Namun yang paling mencolok justru adalah kehampaan di antara bintang-bintang itu. Kekosongan hitam, luas, tak berujung.
+        "Inilah aku," kata Hampa. "Ruang tanpa isi, namun darinyalah lahir bintang, planet, dan kehidupan. Tanpa aku, semesta tidak ada. Tanpa aku, kau tidak pernah bisa bermimpi tentang apa pun. Kau menyebutku kosong, tapi aku adalah fondasi dari segala sesuatu."
+
+        Dira terdiam. Ia melihat bumi dari kejauhan, kecil, rapuh, biru di tengah hampa yang luas. Untuk pertama kalinya, ia merasa betapa kecil dirinya. Namun anehnya, ia juga merasa damai.
+        Ketika kembali ke kamarnya, Dira mulai berubah. Ia tidak lagi mengutuk kesepiannya. Ia belajar duduk bersama hampa, membiarkannya hadir tanpa perlawanan. Dari sana, ia mulai menulis. Sesuatu yang dulu ia sukai tapi ia tinggalkan demi rutinitas. Ia menulis tentang bintang, tentang ruang, tentang dirinya. Kata demi kata mengisi halaman kosong, dan untuk pertama kalinya, ia merasa ruang dalam dirinya tidak lagi benar-benar kosong.
+
+        Namun hidup tidak serta-merta berubah indah. Di kantor, Dira tetap menghadapi tekanan. Rekan-rekannya tidak tahu ia berbicara dengan “Hampa”, dan tentu saja mereka tak akan percaya. Kadang rasa ragu kembali. “Apa gunanya semua ini? Bagaimana jika aku salah mengisi ruangku?”
+        Hampa selalu menjawab dengan tenang. “Isi bukanlah soal benar atau salah. Isi adalah soal keberanian untuk mencoba. Lebih buruk jika kau membiarkan dirimu kosong selamanya.”
+
+        Beberapa waktu kemudian, Dira bertemu seorang teman lama bernama Aruna, yang dulu bercita-cita menjadi penulis. Mereka bertemu di sebuah pameran buku. Aruna masih menulis, meski tidak terkenal. Ia bahagia dengan tulisannya. Dari obrolan itu, Dira merasa malu sekaligus terinspirasi. Ia sadar, ia pun punya ruang yang bisa ia isi dengan tulisan.
+        Malam itu, ia kembali berbicara dengan Hampa. “Aku ingin mencoba lagi. Aku ingin menulis, meski aku tidak tahu ke mana itu akan membawaku.”
+        Hampa tersenyum samar dalam gelap. “Itulah jawabannya. Kau tidak harus tahu akhirnya. Kau hanya perlu berani melangkah, mengisi ruang sedikit demi sedikit. Ingat, aku akan selalu ada, tapi bukan untuk menakutimu. Aku ada untuk mengingatkanmu bahwa kau punya pilihan.”
+
+        Hari-hari berikutnya, Dira mulai menulis lebih banyak. Ia menulis cerita pendek, esai, bahkan puisi. Tulisan-tulisannya tidak sempurna, tapi ia membagikannya secara anonim di internet. Perlahan, orang mulai membaca, lalu meninggalkan komentar. “Tulisanmu menyentuh,” kata seseorang. “Aku merasa tidak sendirian setelah membacanya,” tulis yang lain.
+        Dira terharu. Ia menyadari, apa yang lahir dari kehampaannya bisa mengisi ruang orang lain. Dan itu membuatnya merasa berarti.
+        Suatu malam, Hampa muncul sekali lagi. “Kau lihat, Dira? Aku bukan akhir. Aku adalah awal. Ruang kosong dalam dirimu melahirkan sesuatu yang bisa menyentuh dunia. Jangan takut jika suatu hari aku datang lagi. Terimalah aku, lalu isi aku dengan hal yang membuatmu hidup.”
+
+        Sejak saat itu, Dira tidak lagi memandang hampa sebagai musuh. Ia tahu, hampa akan selalu ada, seperti ruang di antara bintang. Tapi ia juga tahu, ruang itu bisa diisi dengan cahaya, dengan mimpi, dengan cerita.
+        Dira menutup laptopnya malam itu, menatap jendela yang memantulkan cahaya lampu kota. Di langit yang masih gelap, ia membayangkan bintang-bintang yang tersembunyi. Dan dalam hatinya, ia tersenyum.
+        Ia tahu, meski hidup tak selalu penuh, meski kadang terasa sepi, ia tidak lagi takut pada hampa. Karena dari ruang hampa itulah, lahir arti, lahir cahaya, lahir kehidupan.`
+      }
+    ];
+
+    let currentStoryId = null;
+
+    const sidebar = document.getElementById("sidebar");
+    const storyTitle = document.getElementById("storyTitle");
+    const storyContent = document.getElementById("storyContent");
+    const gameBtn = document.getElementById("gameBtn");
+
+    function renderSidebar(){
+      sidebar.innerHTML = "";
+      LIBRARY.forEach(b => {
+        const item = document.createElement("div");
+        item.className = "book-item";
+        item.onclick = () => selectStory(b.id);
+
+        const img = document.createElement("img");
+        img.className = "cover";
+        img.src = b.cover; img.alt = b.title;
+
+        const meta = document.createElement("div");
+        meta.className = "meta";
+        meta.innerHTML = `<h4>${b.title}</h4><div class="genre">${b.genre}</div>`;
+
+        item.appendChild(img); item.appendChild(meta);
+        sidebar.appendChild(item);
+      });
+    }
+
+    function selectStory(storyId){
+      const story = LIBRARY.find(s => s.id === storyId);
+      if(!story) return;
+      currentStoryId = storyId;
+
+      storyTitle.textContent = story.title;
+      storyContent.textContent = story.content;
+      gameBtn.style.display = "block";
+
+      // simpan progress
+      localStorage.setItem("selectedStoryId", storyId);
+    }
+
+    function goToGame(){
+      alert("Ke halaman game untuk " + currentStoryId);
+    }
+
+    function getQueryParam(key) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(key);
+  }
+
+  (function init(){
+    renderSidebar();
+
+    // cek apakah ada query string ?id=...
+    const paramId = getQueryParam("id");
+    if(paramId && LIBRARY.some(s => s.id === paramId)){
+      selectStory(paramId);
+    } else {
+      // fallback ke localStorage kalau ada
+      const savedId = localStorage.getItem("selectedStoryId");
+      if(savedId && LIBRARY.some(s => s.id === savedId)){
+        selectStory(savedId);
+      }
+    }
+  })();
+
+  </script>
+</body>
+</html>

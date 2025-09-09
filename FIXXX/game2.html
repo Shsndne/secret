@@ -3,267 +3,768 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style2.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <title>Memo Match</title>
+    <title>Petualangan Luma dan Tikus</title>
     <style>
+        :root {
+            --primary-color: #3971b8;        /* Celtic Blue */
+            --second-color: #c8d69b;         /* Tea Green */
+            --text-color: #343b1b;           /* Drab Dark Brown */
+            --background-color: #fbfcee;     /* Nory */
+            --card-color: #ffffff;
+            --highlight-color: #f6e6c5;      /* Vanilla */
+            --primary-dark: #2c5a94;         /* Darker shade for hover states */
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --light-shadow: rgba(255, 255, 255, 0.5);
+            --success-color: #4caf50;
+            --warning-color: #ff9800;
+            --danger-color: #f44336;
+        }
+
         * {
-    font-family: 'Poppins', sans-serif;
-    box-sizing: border-box;
-}
+            font-family: 'Poppins', sans-serif;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-body {
-    text-align: center;
-    margin: 20px;
-}
+        body {
+            text-align: center;
+            padding: 20px;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23fbfcee"/><path d="M0,0 L100,100 M100,0 L0,100" stroke="%23c8d69b" stroke-width="0.5" opacity="0.3"/></svg>');
+        }
 
-.status-container {
-    margin-top: 20px;
-    margin-bottom: 10px;
-    font-size: 18px;
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-}
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+        }
 
-#gameGrid {
-    display: grid;
-    grid-template-columns: repeat(6, 80px);
-    gap: 10px;
-    justify-content: center;
-    margin-top: 20px;
-}
+        .header {
+            margin-bottom: 15px;
+        }
 
-.card {
-    width: 60px;
-    height: 80px;
-    position: relative;
-    cursor: pointer;
-}
+        .header h1 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px var(--shadow-color);
+        }
 
-.card img {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-}
+        .header p {
+            color: var(--text-color);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
 
-.card.matched {
-    border: 2px solid lightgreen;
-    cursor: default;
-}
+        .status-container {
+            margin-top: 10px;
+            margin-bottom: 15px;
+            font-size: 18px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            background-color: var(--card-color);
+            padding: 15px 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px var(--shadow-color);
+            border: 2px solid var(--primary-color);
+            width: 100%;
+            max-width: 500px;
+        }
 
+        .status-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .status-label {
+            font-size: 0.9rem;
+            color: var(--text-color);
+            margin-bottom: 5px;
+        }
+
+        .status-value {
+            font-weight: 700;
+            color: var(--primary-color);
+            font-size: 1.4rem;
+        }
+
+        #gameGrid {
+            display: grid;
+            grid-template-columns: repeat(6, 80px);
+            gap: 12px;
+            justify-content: center;
+            background-color: var(--second-color);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px var(--shadow-color);
+            border: 2px solid var(--primary-color);
+            max-width: max-content;
+            margin: 0 auto;
+        }
+
+        .card {
+            width: 80px;
+            height: 100px;
+            position: relative;
+            cursor: pointer;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px var(--shadow-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 2px solid var(--primary-color);
+            background-color: var(--highlight-color);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px var(--shadow-color);
+        }
+
+        .card img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            object-fit: cover;
+            border-radius: 8px;
+            transition: opacity 0.3s ease;
+        }
+
+        .card.matched {
+            border: 3px solid var(--success-color);
+            cursor: default;
+            box-shadow: 0 0 15px var(--success-color);
+            transform: scale(1.05);
+        }
+
+        .card.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card .back {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        /* Story container styles */
+        #storyContainer {
+            background-color: var(--card-color);
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 700px;
+            margin: 0 auto;
+            box-shadow: 0 4px 20px var(--shadow-color);
+            border: 2px solid var(--primary-color);
+            text-align: center;
+        }
+
+        #storyTitle {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        #storyText {
+            text-align: left;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            font-size: 1.05rem;
+            background-color: rgba(200, 214, 155, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        #storyText p {
+            margin-bottom: 15px;
+        }
+
+        #startStoryBtn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px var(--shadow-color);
+            letter-spacing: 0.5px;
+        }
+
+        #startStoryBtn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px var(--shadow-color);
+        }
+
+        /* End modal styles */
+        #endModal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        #endModal.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-content {
+            background-color: var(--card-color);
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 0 25px rgba(0,0,0,0.3);
+            border: 3px solid var(--primary-color);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        #endModal.show .modal-content {
+            transform: translateY(0);
+        }
+
+        #endModal h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        #endModal p {
+            line-height: 1.6;
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+
+        .result-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: rgba(200, 214, 155, 0.3);
+        }
+
+        .result-score {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 10px 0;
+        }
+
+        .result-text {
+            font-size: 1.2rem;
+            font-weight: 500;
+            padding: 10px 20px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .result-perfect {
+            background-color: rgba(76, 175, 80, 0.2);
+            color: #2e7d32;
+        }
+
+        .result-medium {
+            background-color: rgba(255, 152, 0, 0.2);
+            color: #ef6c00;
+        }
+
+        .result-bad {
+            background-color: rgba(244, 67, 54, 0.2);
+            color: #c62828;
+        }
+
+        #restart-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px var(--shadow-color);
+            margin-top: 15px;
+        }
+
+        #restart-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px var(--shadow-color);
+        }
+
+        /* Timer animation */
+        .timer-warning {
+            color: var(--warning-color) !important;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* Card flip animation */
+        .card {
+            perspective: 1000px;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card .front, .card .back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+        }
+
+        .card .front {
+            background-color: var(--card-color);
+            color: var(--text-color);
+            transform: rotateY(180deg);
+        }
+
+        .card .back {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            font-weight: bold;
+            font-size: 1.8rem;
+        }
+
+        /* Responsive design */
+        @media (max-width: 900px) {
+            #gameGrid {
+                grid-template-columns: repeat(4, 70px);
+                gap: 10px;
+                padding: 20px;
+            }
+            
+            .card {
+                width: 70px;
+                height: 90px;
+            }
+            
+            .status-container {
+                flex-direction: row;
+                gap: 20px;
+                padding: 12px 20px;
+                max-width: 450px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            #gameGrid {
+                grid-template-columns: repeat(3, 65px);
+                gap: 8px;
+                padding: 15px;
+            }
+            
+            .card {
+                width: 65px;
+                height: 85px;
+            }
+            
+            .status-container {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+                max-width: 250px;
+            }
+
+            .status-item {
+                flex-direction: row;
+                justify-content: space-between;
+                width: 100%;
+            }
+
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            #storyContainer {
+                padding: 20px;
+            }
+
+            #storyTitle {
+                font-size: 1.6rem;
+            }
+
+            .modal-content {
+                padding: 25px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            #gameGrid {
+                grid-template-columns: repeat(3, 55px);
+                gap: 6px;
+                padding: 12px;
+            }
+            
+            .card {
+                width: 55px;
+                height: 75px;
+            }
+            
+            .status-container {
+                font-size: 16px;
+                padding: 12px;
+            }
+
+            body {
+                padding: 15px;
+            }
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 30px;
+            color: var(--text-color);
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
     </style>
 </head>
 <body>
-    <div id="storyContainer">
-        <h1 id="storyTitle"></h1>
-        <div id="storyText"></div>
-        <button id="startStoryBtn">Mulai Game</button>
-    </div>
-
-    <div id="gameWrapper" style="display:none;">
-        <div class="status-container">
-            <!-- <span>Skor: <span id="score">0</span></span> -->
-            <span>Timer: <span id="timer">0</span></span>
-            <span>Card Left: <span id="pairsLeft">0</span></span>
+    <div class="container">
+        <div class="header">
+            <h1>Petualangan Luma dan Tikus</h1>
+            <p>Temukan pasangan yang tepat dan bantu Luma menangkap tikus-tikus!</p>
         </div>
-        <div id="gameGrid"></div>
-    </div>
 
-    <div id="endModal" style="display:none;">
-        <h2></h2>
-        <p></p>
-        <button id="restart-btn">Ok</button>
-    </div>
+        <div id="storyContainer">
+            <h1 id="storyTitle">Petualangan Luma dan Tikus</h1>
+            <div id="storyText">
+                <p>Luma segera melompat mendekat. Beberapa detik kemudian, tikus lain muncul dari lubang yang berbeda. Semakin lama, semakin banyak tikus bermunculan, berlari cepat di antara sayuran.</p>
+                <p>Inilah waktunya permainan!</p>
+                <p>Kamu harus membantu Luma menangkap tikus-tikus yang muncul dari berbagai lubang. Semakin banyak tikus yang tertangkap, semakin sedikit hasil panen yang hilang.</p>
+            </div>
+            <button id="startStoryBtn">Mulai Petualangan</button>
+        </div>
 
+        <div id="gameWrapper" style="display:none;">
+            <div class="status-container">
+                <div class="status-item">
+                    <div class="status-label">WAKTU</div>
+                    <div class="status-value" id="timer">0</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-label">SISA PASANGAN</div>
+                    <div class="status-value" id="pairsLeft">0</div>
+                </div>
+            </div>
+            <div id="gameGrid"></div>
+        </div>
+
+        <div id="endModal">
+            <div class="modal-content">
+                <h2>Permainan Selesai!</h2>
+                <div class="result-container">
+                    <div>Kamu berhasil menemukan</div>
+                    <div class="result-score"><span id="finalScore">0</span>/6 pasang</div>
+                    <div id="resultMessage" class="result-text"></div>
+                </div>
+                <p id="endingText"></p>
+                <button id="restart-btn">Main Lagi</button>
+            </div>
+        </div>
+
+        <div class="footer">
+            &copy; 2025 Petualangan Luma dan Tikus
+        </div>
+    </div>
 
     <!-- JS -->
-<script>
-    let firstCard = null;
-let secondCard = null;
-let score = 0;
-let pairsLeft = 0;
-let storyData;
-let lockBoard = false;
-let timer;
-let timeLeft = 30;
+    <script>
+        let firstCard = null;
+        let secondCard = null;
+        let score = 0;
+        let pairsLeft = 0;
+        let storyData;
+        let lockBoard = false;
+        let timer;
+        let timeLeft = 30;
 
-const cardLetters = ["b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q"];
+        const cardLetters = ["b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q"];
 
-$(document).ready(async () => {
-    $("#gameWrapper, .status-container, #endModal").hide();
+        $(document).ready(async () => {
+            $("#gameWrapper, .status-container, #endModal").hide();
 
-    const storyId = 2;
+            const storyId = 2;
 
-    try {
-        const res = await fetch("data.json");
-        const data = await res.json();
-        storyData = data.books.find(b => b.id === storyId);
+            try {
+                const res = await fetch("data.json");
+                const data = await res.json();
+                storyData = data.books.find(b => b.id === storyId);
 
-        $("#storyTitle").text(storyData.title);
-        $("#storyText").html(storyData.story.map(p => `<p>${p}</p>`).join(""));
+                $("#storyTitle").text(storyData.title);
+                $("#storyText").html(storyData.story.map(p => `<p>${p}</p>`).join(""));
 
-        pairsLeft = 6;
-        $("#pairsLeft").text(pairsLeft);
-    } catch (err) {
-        console.error("Gagal load JSON:", err);
-        $("#storyTitle").text("Arlo Memory Matching (offline)");
-        $("#storyText").html("<p>Tidak bisa memuat cerita.</p>");
-    }
+                pairsLeft = 6;
+                $("#pairsLeft").text(pairsLeft);
+            } catch (err) {
+                console.error("Gagal load JSON:", err);
+                // Use default story content
+                $("#storyTitle").text("Petualangan Luma dan Tikus");
+                $("#storyText").html(`
+                    <p>Luma segera melompat mendekat. Beberapa detik kemudian, tikus lain muncul dari lubang yang berbeda. Semakin lama, semakin banyak tikus bermunculan, berlari cepat di antara sayuran.</p>
+                    <p>Inilah waktunya permainan!</p>
+                    <p>Kamu harus membantu Luma menangkap tikus-tikus yang muncul dari berbagai lubang. Semakin banyak tikus yang tertangkap, semakin sedikit hasil panen yang hilang.</p>
+                `);
+                
+                // Create default storyData
+                storyData = {
+                    title: "Petualangan Luma dan Tikus",
+                    ending: {
+                        perfect: "Selamat! Semua tikus berhasil ditangkap! Hasil panen pun selamat seluruhnya.",
+                        medium: "Bagus! Sebagian besar tikus berhasil ditangkap. Hasil panen hanya berkurang sedikit.",
+                        bad: "Sayang sekali, hanya sedikit tikus yang tertangkap. Hasil panen berkurang banyak."
+                    }
+                };
+            }
 
-    $("#startStoryBtn").on("click", () => {
-        $("#startStoryBtn").hide();
-        $("#gameWrapper, .status-container").show();
-        startGame();
-        $('html, body').animate({ scrollTop: $("#gameWrapper").offset().top }, 300);
-    });
+            $("#startStoryBtn").on("click", () => {
+                $("#startStoryBtn").hide();
+                $("#gameWrapper, .status-container").show();
+                startGame();
+                $('html, body').animate({ scrollTop: $("#gameWrapper").offset().top }, 300);
+            });
 
-    $("#restart-btn").on("click", () => {
-        clearInterval(timer);
-        $("#endModal, #gameWrapper").hide();
-        $("#storyContainer").show();
-        $("#startStoryBtn").show();
-        score = 0;
-        firstCard = null;
-        secondCard = null;
-        lockBoard = false;
-        pairsLeft = 6;
-        $("#score").text(score);
-        $("#pairsLeft").text(pairsLeft);
-        $("#gameGrid").html("");
-        timeLeft = storyData.gameConfig?.timeLimit || 30;
-        $("#timer").text(timeLeft);
-        window.scrollTo(0, 0);
-    });
-});
+            $("#restart-btn").on("click", () => {
+                clearInterval(timer);
+                $("#endModal").removeClass("show");
+                $("#gameWrapper").hide();
+                $("#storyContainer").show();
+                $("#startStoryBtn").show();
+                score = 0;
+                firstCard = null;
+                secondCard = null;
+                lockBoard = false;
+                pairsLeft = 6;
+                $("#pairsLeft").text(pairsLeft);
+                $("#gameGrid").html("");
+                timeLeft = storyData.gameConfig?.timeLimit || 30;
+                $("#timer").text(timeLeft);
+                window.scrollTo(0, 0);
+            });
+        });
 
-function startGame() {
-    score = 0;
-    pairsLeft = 6;
-    lockBoard = false;
-
-    // Timer
-    timeLeft = storyData.gameConfig?.timeLimit || 30;
-    $("#timer").text(timeLeft);
-    clearInterval(timer);
-    timer = setInterval(() => {
-        timeLeft--;
-        $("#timer").text(timeLeft);
-        if(timeLeft <= 0){
-            clearInterval(timer);
-            showEnding();
-        }
-    }, 1000);
-
-    // Ambil 6 huruf unik
-    const letters = shuffleArray([...cardLetters]).slice(0, 6);
-
-    // Buat array kartu dengan pasangan yang benar
-    let cards = [];
-    letters.forEach(l => {
-        cards.push({value: l, asset: `asset/${l}.png`});
-        cards.push({value: l, asset: `asset/${l}.png`});
-    });
-
-    cards = shuffleArray(cards);
-
-    $("#gameGrid").html("");
-    cards.forEach(cardObj => {
-        $("#gameGrid").append(`
-            <div class="card" data-value="${cardObj.value}">
-                <img class="front" src="${cardObj.asset}">
-                <img class="back" src="asset/a.png">
-            </div>
-        `);
-    });
-
-    $(".card").on("click", function () {
-        handleFlip(this);
-    });
-
-    $("#score").text(score);
-    $("#pairsLeft").text(pairsLeft);
-}
-
-// Fisher-Yates shuffle stabil
-function shuffleArray(array) {
-    let currentIndex = array.length, randomIndex;
-    while (currentIndex != 0) {
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex--;
-        [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
-    }
-    return array;
-}
-
-// Check apakah semua kartu sudah matched
-function allCardsMatched() {
-    return $(".card").toArray().every(c => $(c).hasClass("matched"));
-}
-
-// Check apakah semua kartu punya value sama (rest parameter)
-function checkPair(...cards) {
-    const values = cards.map(c => $(c).data("value"));
-    return values.every(v => v === values[0]);
-}
-
-// Handle flip pakai .some() dan checkPair
-function handleFlip(card) {
-    if ([firstCard, secondCard].some(c => c === card) || $(card).hasClass("matched") || lockBoard) return;
-
-    $(card).addClass("flipped");
-    $(card).find(".front").fadeIn(200);
-    $(card).find(".back").fadeOut(200);
-
-    if (!firstCard) {
-        firstCard = card;
-        return;
-    }
-    secondCard = card;
-    lockBoard = true;
-
-    if (checkPair(firstCard, secondCard)) {
-        $(firstCard).add(secondCard).addClass("matched").removeClass("flipped");
-        score++;
-        pairsLeft--;
-        $("#score").text(score);
-        $("#pairsLeft").text(pairsLeft);
-
-        firstCard = null;
-        secondCard = null;
-        lockBoard = false;
-
-        if (allCardsMatched()) {
-            clearInterval(timer);
-            showEnding();
-        }
-    } else {
-        setTimeout(() => {
-            $(firstCard).removeClass("flipped").find(".front").fadeOut(200).end().find(".back").fadeIn(200);
-            $(secondCard).removeClass("flipped").find(".front").fadeOut(200).end().find(".back").fadeIn(200);
-
-            firstCard = null;
-            secondCard = null;
+        function startGame() {
+            score = 0;
+            pairsLeft = 6;
             lockBoard = false;
-        }, 700);
-    }
-}
 
-function showEnding() {
-    $("#gameWrapper").hide();
-    $("#endModal h2").text("Game Selesai!");
+            // Timer
+            timeLeft = storyData.gameConfig?.timeLimit || 30;
+            $("#timer").text(timeLeft).removeClass("timer-warning");
+            if (timeLeft <= 10) {
+                $("#timer").addClass("timer-warning");
+            }
+            clearInterval(timer);
+            timer = setInterval(() => {
+                timeLeft--;
+                $("#timer").text(timeLeft);
+                
+                if (timeLeft <= 10) {
+                    $("#timer").addClass("timer-warning");
+                }
+                
+                if(timeLeft <= 0){
+                    clearInterval(timer);
+                    showEnding();
+                }
+            }, 1000);
 
-    let endingText = "";
-    if (score === 6) endingText = storyData.ending.perfect;
-    else if (score >= 3) endingText = storyData.ending.medium;
-    else endingText = storyData.ending.bad;
+            // Ambil 6 huruf unik
+            const letters = shuffleArray([...cardLetters]).slice(0, 6);
 
-    $("#endModal p").html(endingText);
-    $("#endModal").show();
-}
-</script>
+            // Buat array kartu dengan pasangan yang benar
+            let cards = [];
+            letters.forEach(l => {
+                cards.push({value: l, asset: `asset/${l}.png`});
+                cards.push({value: l, asset: `asset/${l}.png`});
+            });
+
+            cards = shuffleArray(cards);
+
+            $("#gameGrid").html("");
+            cards.forEach(cardObj => {
+                $("#gameGrid").append(`
+                    <div class="card" data-value="${cardObj.value}">
+                        <div class="card-inner">
+                            <div class="front">
+                                <img src="${cardObj.asset}">
+                            </div>
+                            <div class="back">?</div>
+                        </div>
+                    </div>
+                `);
+            });
+
+            $(".card").on("click", function () {
+                handleFlip(this);
+            });
+
+            $("#pairsLeft").text(pairsLeft);
+        }
+
+        // Fisher-Yates shuffle stabil
+        function shuffleArray(array) {
+            let currentIndex = array.length, randomIndex;
+            while (currentIndex != 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+            }
+            return array;
+        }
+
+        // Check apakah semua kartu sudah matched
+        function allCardsMatched() {
+            return $(".card").toArray().every(c => $(c).hasClass("matched"));
+        }
+
+        // Check apakah semua kartu punya value sama (rest parameter)
+        function checkPair(...cards) {
+            const values = cards.map(c => $(c).data("value"));
+            return values.every(v => v === values[0]);
+        }
+
+        // Handle flip pakai .some() dan checkPair
+        function handleFlip(card) {
+            if ([firstCard, secondCard].some(c => c === card) || $(card).hasClass("matched") || lockBoard) return;
+
+            $(card).addClass("flipped");
+
+            if (!firstCard) {
+                firstCard = card;
+                return;
+            }
+            secondCard = card;
+            lockBoard = true;
+
+            if (checkPair(firstCard, secondCard)) {
+                $(firstCard).add(secondCard).addClass("matched");
+                score++;
+                pairsLeft--;
+                $("#pairsLeft").text(pairsLeft);
+
+                firstCard = null;
+                secondCard = null;
+                lockBoard = false;
+
+                if (allCardsMatched()) {
+                    clearInterval(timer);
+                    showEnding();
+                }
+            } else {
+                setTimeout(() => {
+                    $(firstCard).removeClass("flipped");
+                    $(secondCard).removeClass("flipped");
+
+                    firstCard = null;
+                    secondCard = null;
+                    lockBoard = false;
+                }, 700);
+            }
+        }
+
+        function showEnding() {
+            $("#gameWrapper").hide();
+            
+            // Update final score
+            $("#finalScore").text(score);
+            
+            // Set result message based on score
+            let resultMessage = "";
+            let resultClass = "";
+            let endingText = "";
+            
+            if (score === 6) {
+                resultMessage = "HEBAT! Semua tikus tertangkap!";
+                resultClass = "result-perfect";
+                endingText = "Selamat! Semua tikus berhasil ditangkap! Hasil panen pun selamat seluruhnya.";
+            } else if (score >= 3) {
+                resultMessage = "BAGUS! Sebagian tikus tertangkap";
+                resultClass = "result-medium";
+                endingText = "Bagus! Sebagian besar tikus berhasil ditangkap. Hasil panen hanya berkurang sedikit.";
+            } else {
+                resultMessage = "COBA LAGI! Sedikit tikus tertangkap";
+                resultClass = "result-bad";
+                endingText = "Sayang sekali, hanya sedikit tikus yang tertangkap. Hasil panen berkurang banyak.";
+            }
+            
+            $("#resultMessage")
+                .text(resultMessage)
+                .removeClass("result-perfect result-medium result-bad")
+                .addClass(resultClass);
+                
+            $("#endingText").text(endingText);
+            
+            $("#endModal").addClass("show");
+        }
+    </script>
 </body>
 </html>

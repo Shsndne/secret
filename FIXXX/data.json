@@ -1,7 +1,7 @@
 {
   "books": [
     {
-      "id": 1,
+      "id": 2,
       "title": "Petualangan Luma dan Tikus",
       "story": [
         "Luma segera melompat mendekat. Beberapa detik kemudian, tikus lain muncul dari lubang yang berbeda. Semakin lama, semakin banyak tikus bermunculan, berlari cepat di antara sayuran.",
@@ -21,7 +21,7 @@
       }
     },
     {
-      "id": 2,
+      "id": 3,
       "title": "Arlo dan Kartu Ajaib Cardonia",
       "story": [
         "Arlo melompat kegirangan. Dari balik pintu, dunia penuh warna, makhluk lucu, dan gulungan buku ajaib menantinya. Ia menari kecil karena bahagia, dikelilingi teman-teman peri yang menatap dengan senyum manis.",
@@ -41,7 +41,7 @@
       }
     },
     {
-      "id": 3,
+      "id": 5,
       "title": "Rahasia Kartu Senyawa di Chemiville",
       "story": [
         "Halaman buku bergetar, cahaya hangat memenuhi ruangan, dan semua unsur menari gembira. Kini, hasil akhirnya bergantung pada seberapa banyak senyawa yang berhasil kamu buat bersama Kio.",
@@ -81,7 +81,7 @@
       }
     },
     {
-      "id": 5,
+      "id": 1,
       "title": "Batu dan Manusia",
       "story": [
         "Batu itu bergetar lembut. Suara berat kembali terdengar: 'Hanya dengan kerendahan hati manusia bisa hidup berdampingan dengan kami.'",

@@ -6,11 +6,17 @@
   <title>Jollify</title>
   <style>
     :root {
-      --kuning-muda: #FFF7AD;
-      --merah-muda: #FFB3AE;
-      --magenta: #FF49C1;
-      --ungu-gelap: #6A1452;
-      --ungu-tua: #44133E;
+      --primary-color: #3971b8;        /* Celtic Blue */
+      --second-color: #c8d69b;         /* Tea Green */
+      --text-color: #343b1b;           /* Drab Dark Brown */
+      --background-color: #fbfcee;     /* Nory */
+      --card-color: #ffffff;
+      --highlight-color: #f6e6c5;      /* Vanilla */
+      --primary-dark: #2c5a94;         /* Darker shade for hover states */
+      --shadow-color: rgba(0, 0, 0, 0.1);
+      --light-shadow: rgba(255, 255, 255, 0.5);
+      --border-radius: 16px;
+      --transition-speed: 0.3s;
     }
 
     * {
@@ -21,13 +27,14 @@
     }
 
     body {
-      background: linear-gradient(135deg, var(--ungu-tua) 0%, var(--ungu-gelap) 100%);
-      color: var(--kuning-muda);
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);
+      color: var(--text-color);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      padding: 20px;
     }
 
     .hero {
@@ -43,7 +50,7 @@
     .hero h1 {
       font-size: 2.2rem;
       margin-bottom: 20px;
-      color: var(--merah-muda);
+      color: var(--second-color);
       max-width: 800px;
     }
 
@@ -55,19 +62,18 @@
     }
 
     .login-container {
-      background: rgba(255, 179, 174, 0.1);
+      background: var(--card-color);
       padding: 30px;
-      border-radius: 16px;
+      border-radius: var(--border-radius);
       width: 100%;
       max-width: 400px;
       text-align: center;
-      backdrop-filter: blur(5px);
-      border: 1px solid rgba(255, 179, 174, 0.2);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 10px 25px var(--shadow-color);
+      border: 2px solid var(--primary-color);
     }
 
     .icon-profile {
-      background: var(--magenta);
+      background: var(--primary-color);
       width: 80px;
       height: 80px;
       border-radius: 50%;
@@ -75,25 +81,25 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      color: var(--kuning-muda);
+      color: var(--card-color);
       font-weight: bold;
       font-size: 32px;
     }
 
     h2 {
       margin: 10px 0 20px;
-      color: var(--merah-muda);
+      color: var(--primary-dark);
     }
 
     #message {
-      color: var(--merah-muda);
+      color: var(--primary-color);
       font-size: 0.9em;
       display: none;
       margin: 10px 0;
     }
 
     #error-message {
-      color: var(--magenta);
+      color: #e74c3c;
       font-size: 0.9em;
       margin: 10px 0;
       display: none;
@@ -103,16 +109,21 @@
       width: 100%;
       padding: 14px;
       margin: 10px 0;
-      background: rgba(255, 179, 174, 0.15);
-      border: none;
-      color: var(--kuning-muda);
-      border-bottom: 2px solid var(--magenta);
-      border-radius: 4px;
+      background: var(--highlight-color);
+      border: 2px solid var(--second-color);
+      color: var(--text-color);
+      border-radius: 8px;
       font-size: 1rem;
+      transition: border-color var(--transition-speed) ease;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--primary-color);
     }
 
     input::placeholder {
-      color: rgba(255, 179, 174, 0.7);
+      color: rgba(52, 59, 27, 0.5);
     }
 
     .btn-container {
@@ -124,22 +135,21 @@
     #login-btn {
       position: absolute;
       padding: 14px 30px;
-      background: var(--magenta);
-      color: var(--kuning-muda);
+      background: var(--primary-color);
+      color: var(--card-color);
       border: none;
       border-radius: 30px;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: all var(--transition-speed) ease;
       font-weight: 600;
       font-size: 1rem;
-      box-shadow: 0 4px 10px rgba(255, 73, 193, 0.3);
+      box-shadow: 0 4px 10px rgba(57, 113, 184, 0.3);
     }
 
     #login-btn:hover:not(:disabled) {
       transform: translateY(-3px);
-      box-shadow: 0 6px 15px rgba(255, 73, 193, 0.4);
-      background: var(--merah-muda);
-      color: var(--ungu-tua);
+      box-shadow: 0 6px 15px rgba(57, 113, 184, 0.4);
+      background: var(--primary-dark);
     }
 
     #login-btn:disabled {
@@ -267,6 +277,11 @@
       if (nameInput.value.trim() !== "") {
         // Simpan nama pengguna di localStorage
         localStorage.setItem('userName', nameInput.value.trim());
+        
+        // Tampilkan pesan sukses
+        msg.style.display = 'block';
+        errorMsg.style.display = 'none';
+        msg.textContent = 'Berhasil masuk! Mengalihkan...';
         
         // Redirect ke halaman utama setelah 1 detik
         setTimeout(() => {

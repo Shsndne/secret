@@ -7,142 +7,246 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <style>
-        * {
-    font-family: 'Poppins', sans-serif;
-}
-
-html, body {
-    height: 100%;
-    margin: 0;
-    background: #fff;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-}
-
-#modal, #endModal {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.6);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10;
-}
-
-#modal-content,
-#endModal .modal-content {
-    background: white;
-    padding: 30px;
-    border-radius: 15px;
-    max-width: 400px;
-    width: 90%;
-    box-shadow: 0 0 15px rgba(0,0,0,0.3);
-}
-
-#modal-content h2,
-#endModal .modal-content h2 {
-    margin-top: 0;
+<style>
+    :root {
+        --primary-color: #3971b8;        /* Celtic Blue */
+        --second-color: #c8d69b;         /* Tea Green */
+        --text-color: #343b1b;           /* Drab Dark Brown */
+        --background-color: #fbfcee;     /* Nory */
+        --card-color: #ffffff;
+        --highlight-color: #f6e6c5;      /* Vanilla */
+        --primary-dark: #2c5a94;         /* Darker shade for hover states */
+        --shadow-color: rgba(0, 0, 0, 0.1);
+        --light-shadow: rgba(255, 255, 255, 0.5);
     }
 
-#start-btn,
-#endModal button {
-    display: block;
-    width: 40%;
-    margin: 20px auto 0;
-    padding: 10px 0;
-    border: none;
-    background: black;
-    color: white;
-    font-size: 18px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    text-align: center;
-}
+    * {
+        font-family: 'Poppins', sans-serif;
+    }
 
-#start-btn:hover,
-#endModal button:hover {
-    background: #333;
-}
+    html, body {
+        height: 100%;
+        margin: 0;
+        background: var(--background-color);
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+        color: var(--text-color);
+    }
 
-.status-container {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 20px;
-    width: 100%;
-    max-width: 400px;
-    flex-wrap: wrap;
-    padding: 0 10px;
-    box-sizing: border-box;
-}
+    #modal, #endModal {
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(0,0,0,0.6);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 10;
+    }
 
-.status-box {
-    background: white ;
-    border-radius: 25px;
-    box-shadow:
-        inset 0 4px 6px rgba(0, 0, 0, 0.5),
-        inset 0 -4px 6px rgba(255, 255, 255, 0.2); 
-    padding: 10px 30px;
-    font-size: 14px;
-    font-weight: 600;
-    min-width: 120px;
-    flex: 1 1 120px;
-    color: #333;
-    user-select: none;
-    text-align: center;
-    transition: background-color 0.3s ease;
-}
+    #modal-content,
+    #endModal .modal-content {
+        background: var(--card-color);
+        padding: 30px;
+        border-radius: 15px;
+        max-width: 400px;
+        width: 90%;
+        box-shadow: 0 0 15px rgba(0,0,0,0.3);
+        color: var(--text-color);
+        border: 2px solid var(--primary-color);
+    }
 
-#game {
-    display: grid;
-    grid-template-columns: repeat(3, 100px);
-    gap: 10px;
-    justify-content: center;
-    margin-top: 20px;
-    background-color: white;
-    padding: 15px;
-    border-radius: 15px;
-    box-shadow: 0 0 10px rgba(50, 100, 50, 0.3);
-    border: 3px solid white;
-    width: max-content;
-}
+    #modal-content h2,
+    #endModal .modal-content h2 {
+        margin-top: 0;
+        color: var(--primary-color);
+    }
 
-.hole {
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    background: white ;
-    border-radius: 25px;
-    box-shadow:
-        inset 0 4px 6px rgba(0, 0, 0, 0.5),
-        inset 0 -4px 6px rgba(255, 255, 255, 0.2);
-    border-radius: 20px;
-    position: relative;
-    overflow: hidden;
-}
+    #start-btn,
+    #endModal button,
+    #startStoryBtn {
+        display: block;
+        width: 40%;
+        margin: 20px auto 0;
+        padding: 10px 0;
+        border: none;
+        background: var(--primary-color);
+        color: white;
+        font-size: 18px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        text-align: center;
+    }
 
-.mole {
-    width: 80%;
-    height: 80%;
-    position: absolute;
-    top: 10%;
-    left: 10%;
-    cursor: pointer;
-}
+    #start-btn:hover,
+    #endModal button:hover,
+    #startStoryBtn:hover {
+        background: var(--primary-dark);
+    }
 
-.mole img {
-    width: 100%;
-    height: auto;
-    display: block;
-    user-select: none;
-}
+    .status-container {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 20px;
+        width: 100%;
+        max-width: 400px;
+        flex-wrap: wrap;
+        padding: 0 10px;
+        box-sizing: border-box;
+    }
 
-    </style>
+    .status-box {
+        background: var(--card-color);
+        border-radius: 25px;
+        box-shadow:
+            inset 0 4px 6px var(--shadow-color),
+            inset 0 -4px 6px var(--light-shadow); 
+        padding: 10px 30px;
+        font-size: 14px;
+        font-weight: 600;
+        min-width: 120px;
+        flex: 1 1 120px;
+        color: var(--text-color);
+        user-select: none;
+        text-align: center;
+        transition: all 0.3s ease;
+        border: 2px solid var(--primary-color);
+    }
+
+    .status-box:hover {
+        box-shadow:
+            inset 0 4px 8px var(--shadow-color),
+            inset 0 -4px 8px var(--light-shadow);
+        transform: translateY(-2px);
+    }
+
+    #game {
+        display: grid;
+        grid-template-columns: repeat(3, 100px);
+        gap: 10px;
+        justify-content: center;
+        margin-top: 20px;
+        background-color: var(--second-color);
+        padding: 15px;
+        border-radius: 15px;
+        box-shadow: 0 0 10px var(--shadow-color);
+        border: 3px solid var(--primary-color);
+        width: max-content;
+    }
+
+    .hole {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        background: var(--highlight-color);
+        border-radius: 25px;
+        box-shadow:
+            inset 0 4px 6px var(--shadow-color),
+            inset 0 -4px 6px var(--light-shadow);
+        border-radius: 20px;
+        position: relative;
+        overflow: hidden;
+        border: 2px solid var(--primary-color);
+        transition: transform 0.2s ease;
+    }
+
+    .hole:hover {
+        transform: scale(1.05);
+    }
+
+    .mole {
+        width: 80%;
+        height: 80%;
+        position: absolute;
+        top: 10%;
+        left: 10%;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+    }
+
+    .mole:hover {
+        transform: scale(1.1);
+    }
+
+    .mole img {
+        width: 100%;
+        height: auto;
+        display: block;
+        user-select: none;
+        border-radius: 10px;
+    }
+
+    #storyContainer {
+        background: var(--card-color);
+        padding: 20px;
+        border-radius: 15px;
+        max-width: 600px;
+        margin: 20px;
+        box-shadow: 0 0 15px var(--shadow-color);
+        border: 2px solid var(--primary-color);
+    }
+
+    #storyTitle {
+        color: var(--primary-color);
+        margin-bottom: 15px;
+        font-size: 1.8rem;
+    }
+
+    #storyText {
+        text-align: left;
+        line-height: 1.6;
+        margin-bottom: 20px;
+        font-size: 1rem;
+    }
+
+    #storyAction {
+        display: flex;
+        justify-content: center;
+    }
+
+    /* Animasi untuk modal */
+    @keyframes modalFadeIn {
+        from { opacity: 0; transform: scale(0.9); }
+        to { opacity: 1; transform: scale(1); }
+    }
+
+    #modal-content,
+    #endModal .modal-content {
+        animation: modalFadeIn 0.3s ease;
+    }
+
+    /* Responsive design */
+    @media (max-width: 600px) {
+        #game {
+            grid-template-columns: repeat(3, 80px);
+            gap: 8px;
+            padding: 10px;
+        }
+        
+        .hole {
+            border-radius: 15px;
+        }
+        
+        .status-container {
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .status-box {
+            min-width: auto;
+            padding: 8px 20px;
+        }
+        
+        #storyContainer {
+            margin: 10px;
+            padding: 15px;
+        }
+    }
+</style>
 </head>
 <body>
     <!-- Story Container -->
@@ -200,7 +304,7 @@ let moleInterval, timerId, timeLeft, score, gameOver, storyData;
 $(document).ready(async () => {
     $("#modal, #title, .status-container, #game, #endModal").hide();
 
-    const storyId = 4;
+    const storyId = 1;
 
     try {
         const res = await fetch("data.json");
@@ -211,7 +315,7 @@ $(document).ready(async () => {
         $("#storyText").html(storyData.story.map(p => `<p>${p}</p>`).join(""));
     } catch (err) {
         console.error("Gagal load JSON:", err);
-        $("#storyTitle").text("Jus Segar di Pagi Hari");
+        $("#storyTitle").text("Petualangan Luma (offline)");
         $("#storyText").html("<p>Tidak bisa memuat cerita. Coba jalankan lewat server lokal.</p>");
     }
 

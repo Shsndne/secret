@@ -742,7 +742,7 @@
             
             if (!userName) {
                 // Jika tidak ada nama, redirect kembali ke halaman login
-                window.location.href = 'form.html';
+                window.location.href = 'index.html';
                 return;
             }
             
@@ -768,7 +768,7 @@
                 this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging out...';
                 setTimeout(() => {
                     localStorage.removeItem('userName');
-                    window.location.href = 'form.html';
+                    window.location.href = 'index.html';
                 }, 1000);
             });
 

@@ -1,6 +1,26 @@
 {
   "books": [
     {
+      "id": 1,
+      "title": "Batu dan Manusia",
+      "story": [
+        "Batu itu bergetar lembut. Suara berat kembali terdengar: 'Hanya dengan kerendahan hati manusia bisa hidup berdampingan dengan kami.'",
+        "Inilah waktunya permainan!",
+        "Bantu Sakala menjawab pertanyaan-pertanyaan bijak dari batu. Semakin benar jawabanmu, semakin harmonis hubungan manusia dengan alam."
+      ],
+      "game": "wisdom-quiz",
+      "ending": {
+        "perfect": "Dengan kebijaksanaan yang didapat dari batu, manusia belajar hidup harmonis dengan alam. Negeri Ardhapada menjadi contoh perdamaian antara manusia dan bumi. Sakala dikenang sebagai guru bijak yang mengajarkan arti menghormati setiap unsur alam.",
+        "medium": "Manusia mulai mengurangi perusakan alam tetapi masih melakukan beberapa kesalahan. Mereka belajar untuk lebih bijak dalam memanfaatkan sumber daya, meski kadang masih lupa akan pelajaran dari batu.",
+        "bad": "Keserakahan manusia kembali muncul setelah beberapa generasi. Alam kembali murka, dan pelajaran dari Sakala hampir terlupakan. Namun, segelintir orang masih berusaha menjaga warisan kebijaksanaan itu."
+      },
+      "gameConfig": {
+        "timeLimit": 120,
+        "questions": 5,
+        "passingScore": 4
+      }
+    },
+    {
       "id": 2,
       "title": "Petualangan Luma dan Tikus",
       "story": [
@@ -41,26 +61,6 @@
       }
     },
     {
-      "id": 5,
-      "title": "Rahasia Kartu Senyawa di Chemiville",
-      "story": [
-        "Halaman buku bergetar, cahaya hangat memenuhi ruangan, dan semua unsur menari gembira. Kini, hasil akhirnya bergantung pada seberapa banyak senyawa yang berhasil kamu buat bersama Kio.",
-        "Inilah waktunya permainan!",
-        "Bantu Kio menggabungkan kartu unsur menjadi senyawa ajaib. Semakin banyak senyawa yang berhasil dibuat, semakin terang cahaya laboratorium dan semakin indah halaman Buku Senyawa Ajaib."
-      ],
-      "game": "inventory-crafting",
-      "ending": {
-        "perfect": "Kio berhasil mengisi buku dengan enam senyawa. Laboratorium bersinar secerah matahari pagi, kristal di dinding berkilau seperti bintang, dan semua murid bersorak riang. Prof. Lumina menobatkannya sebagai 'Alkemis Kecil Chemiville', dan Buku Senyawa berubah menjadi emas yang abadi.",
-        "medium": "Kio hanya berhasil mengisi buku dengan beberapa senyawa. Beberapa halaman buku masih kosong, tapi cahaya lembut tetap memancar. Prof. Lumina menepuk bahunya dengan senyum: 'Kau sudah melangkah jauh. Masih ada ruang untuk belajar, dan itu adalah bagian dari keajaiban.'",
-        "bad": "Kio gagal mengisi buku senyawa. Banyak percobaan gagal dan Awan Gelap menutupi sebagian laboratorium. Meski sedikit kecewa, Kio tidak putus asa. Prof. Lumina menunduk sambil berkata: 'Setukan alkemis hebat pernah gagal di awal. Besok, mari kita coba lagi bersama.'"
-      },
-      "gameConfig": {
-        "timeLimit": 40,
-        "totalPairs": 6,
-        "hintCooldown": 10
-      }
-    },
-    {
       "id": 4,
       "title": "Jus Segar di Pagi Hari",
       "story": [
@@ -81,23 +81,23 @@
       }
     },
     {
-      "id": 1,
-      "title": "Batu dan Manusia",
+      "id": 5,
+      "title": "Rahasia Kartu Senyawa di Chemiville",
       "story": [
-        "Batu itu bergetar lembut. Suara berat kembali terdengar: 'Hanya dengan kerendahan hati manusia bisa hidup berdampingan dengan kami.'",
+        "Halaman buku bergetar, cahaya hangat memenuhi ruangan, dan semua unsur menari gembira. Kini, hasil akhirnya bergantung pada seberapa banyak senyawa yang berhasil kamu buat bersama Kio.",
         "Inilah waktunya permainan!",
-        "Bantu Sakala menjawab pertanyaan-pertanyaan bijak dari batu. Semakin benar jawabanmu, semakin harmonis hubungan manusia dengan alam."
+        "Bantu Kio menggabungkan kartu unsur menjadi senyawa ajaib. Semakin banyak senyawa yang berhasil dibuat, semakin terang cahaya laboratorium dan semakin indah halaman Buku Senyawa Ajaib."
       ],
-      "game": "wisdom-quiz",
+      "game": "inventory-crafting",
       "ending": {
-        "perfect": "Dengan kebijaksanaan yang didapat dari batu, manusia belajar hidup harmonis dengan alam. Negeri Ardhapada menjadi contoh perdamaian antara manusia dan bumi. Sakala dikenang sebagai guru bijak yang mengajarkan arti menghormati setiap unsur alam.",
-        "medium": "Manusia mulai mengurangi perusakan alam tetapi masih melakukan beberapa kesalahan. Mereka belajar untuk lebih bijak dalam memanfaatkan sumber daya, meski kadang masih lupa akan pelajaran dari batu.",
-        "bad": "Keserakahan manusia kembali muncul setelah beberapa generasi. Alam kembali murka, dan pelajaran dari Sakala hampir terlupakan. Namun, segelintir orang masih berusaha menjaga warisan kebijaksanaan itu."
+        "perfect": "Kio berhasil mengisi buku dengan six senyawa. Laboratorium bersinar secerah matahari pagi, kristal di dinding berkilau seperti bintang, dan semua murid bersorak riang. Prof. Lumina menobatkannya sebagai 'Alkemis Kecil Chemiville', dan Buku Senyawa berubah menjadi emas yang abadi.",
+        "medium": "Kio hanya berhasil mengisi buku dengan beberapa senyawa. Beberapa halaman buku masih kosong, tapi cahaya lembut tetap memancar. Prof. Lumina menepuk bahunya dengan senyum: 'Kau sudah melangkah jauh. Masih ada ruang untuk belajar, dan itu adalah bagian dari keajaiban.'",
+        "bad": "Kio gagal mengisi buku senyawa. Banyak percobaan gagal dan Awan Gelap menutupi sebagian laboratorium. Meski sedikit kecewa, Kio tidak putus asa. Prof. Lumina menunduk sambil berkata: 'Setukan alkemis hebat pernah gagal di awal. Besok, mari kita coba lagi bersama.'"
       },
       "gameConfig": {
-        "timeLimit": 120,
-        "questions": 5,
-        "passingScore": 4
+        "timeLimit": 40,
+        "totalPairs": 6,
+        "hintCooldown": 10
       }
     },
     {
